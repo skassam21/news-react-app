@@ -5,7 +5,7 @@ var Content = React.createClass({
     render: function() {
         return (
         <div>
-            <b>Congratulationss</b>, you are now ready to implement your client side application! Enjoy :-)
+            Hello world
         </div>
         );
     }
