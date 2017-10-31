@@ -1,31 +1,32 @@
 import React, { Component } from 'react';
+import LandingPage from './../LandingPage/LandingPage';
+import FirstQuestion from './../Questions/Questions';
 import s from './App.scss';
-
-function IntroMessage(props) {
-  return (
-    <div className="row">
-      <div className="col-lg-12">
-        <h1>Welcome to NewsEd!</h1>
-        <button className="btn btn-primary"
-          style={{marginTop: '20px'}}>Get Started</button>
-      </div>
-    </div>
-  )
-}
 
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      question: 1
+      page: 0
     }
+
+    this.changePage = (newPage) => this._changePage(newPage);
+
+  }
+
+  _changePage(newPage) {
+    this.setState({
+      page: newPage
+    })
   }
 
   render() {
-    let question = null;
-    if (this.state.question === 1) {
-      question = <IntroMessage />;
+    let pageView = null;
+    if (this.state.page === 0) {
+      pageView = <LandingPage changePage={this.changePage} />;
+    } else if (this.state.page === 1) {
+      pageView = <FirstQuestion />;
     }
 
     let styles = {
@@ -35,7 +36,7 @@ class App extends Component {
 
     return (
       <div className="intro-page container" style={styles}>
-        {question}
+        {pageView}
       </div>
     )
   }
