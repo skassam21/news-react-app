@@ -1,15 +1,28 @@
-import React from 'react';
+import React, { Component } from 'react';
 
-function LandingPage(props) {
-  return (
-    <div className="row">
-      <div className="col-lg-12">
-        <h1>Welcome to NewsEd!</h1>
-        <button className="btn btn-primary" onClick={props.childChangePage(1)}
-          style={{marginTop: '20px'}}>Get Started</button>
+class LandingPage extends Component {
+  constructor(props) {
+    super(props);
+
+    this.getStarted = () => this._getStarted();
+  }
+
+  _getStarted() {
+    this.props.changePage('firstQuestion');
+  }
+
+
+  render() {
+    return (
+      <div className="row">
+        <div className="col-lg-12">
+          <h1>Welcome to NewsEd!</h1>
+          <button className="btn btn-primary" onClick={this.getStarted}
+            style={{marginTop: '20px'}}>Get Started</button>
+        </div>
       </div>
-    </div>
-  )
+    )
+  }
 }
 
 export default LandingPage;
