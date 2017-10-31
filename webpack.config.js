@@ -1,5 +1,4 @@
-var autoprefixer = require('autoprefixer');
-var precss = require('precss');
+var webpack = require('webpack');
 
 var config = {
     context: __dirname + "/src",
@@ -25,19 +24,21 @@ var config = {
           },
           {
               test: /\.scss$/,
-              loaders: ['style-loader', 'css-loader']
+              loaders: ['style-loader', 'css-loader', 'sass-loader']
           },
           {
-              test: /\.scss$/,
-              loader: 'postcss-loader',
-              options: { plugins: () => [
-                autoprefixer,
-                precss
-              ]
-            }
+            test: /\.(png|woff|woff2|eot|ttf|svg)$/,
+            loader: 'url-loader?limit=100000'
           }
         ],
-    }
+    },
+    plugins: [
+      new webpack.ProvidePlugin({
+        $: 'jquery',
+        jQuery: 'jquery',
+        'window.jQuery': 'jquery',
+        Popper: ['popper.js', 'default']})
+    ]
 };
 
 module.exports = config;
