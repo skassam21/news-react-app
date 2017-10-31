@@ -8,11 +8,10 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      page: 0
+      page: 'landingPage'
     }
 
     this.changePage = (newPage) => this._changePage(newPage);
-
   }
 
   _changePage(newPage) {
@@ -23,9 +22,10 @@ class App extends Component {
 
   render() {
     let pageView = null;
-    if (this.state.page === 0) {
+
+    if (this.state.page === 'landingPage') {
       pageView = <LandingPage changePage={this.changePage} />;
-    } else if (this.state.page === 1) {
+    } else if (this.state.page === 'firstQuestion') {
       pageView = <FirstQuestion />;
     }
 
