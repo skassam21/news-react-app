@@ -5,7 +5,7 @@ function IntroMessage(props) {
   return (
     <div className="row">
       <div className="col-lg-12">
-        <h1>Welcome to Newsboard!</h1>
+        <h1>Welcome to NewsEd!</h1>
         <button className="btn btn-primary"
           style={{marginTop: '20px'}}>Get Started</button>
       </div>

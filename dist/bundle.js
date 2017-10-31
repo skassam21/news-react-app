@@ -20258,22 +20258,59 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+function IntroMessage(props) {
+  return _react2.default.createElement(
+    'div',
+    { className: 'row' },
+    _react2.default.createElement(
+      'div',
+      { className: 'col-lg-12' },
+      _react2.default.createElement(
+        'h1',
+        null,
+        'Welcome to Newsboard!'
+      ),
+      _react2.default.createElement(
+        'button',
+        { className: 'btn btn-primary',
+          style: { marginTop: '20px' } },
+        'Get Started!'
+      )
+    )
+  );
+}
+
 var App = function (_Component) {
   _inherits(App, _Component);
 
-  function App() {
+  function App(props) {
     _classCallCheck(this, App);
 
-    return _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).apply(this, arguments));
+    var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
+
+    _this.state = {
+      question: 1
+    };
+    return _this;
   }
 
   _createClass(App, [{
     key: 'render',
     value: function render() {
+      var question = null;
+      if (this.state.question === 1) {
+        question = _react2.default.createElement(IntroMessage, null);
+      }
+
+      var styles = {
+        textAlign: 'center',
+        paddingTop: '200px'
+      };
+
       return _react2.default.createElement(
-        'h1',
-        null,
-        'Hello, React!'
+        'div',
+        { className: 'intro-page container', style: styles },
+        question
       );
     }
   }]);
