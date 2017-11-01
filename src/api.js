@@ -32,7 +32,7 @@ var Api = {
       });
     });
   },
-  getNewsArticles: function(source, sortBy, limit) {
+  getArticlesFromSource: function(source, sortBy, limit) {
     let params = {
       apiKey: API_KEY,
       source: source
@@ -59,6 +59,20 @@ var Api = {
         error: function(err) {
           reject(err);
         }
+      });
+    });
+  },
+  getArticlesFromSources: function(sources) {
+    return new Promise((resolve, reject) => {
+      let promises = [];
+      for (let idx in sources) {
+        promises.push(Api.getArticlesFromSource(sources[idx]));
+      }
+      Promise.all(promises).then(allArticles => {
+        // Merge all the arrays into one array
+        resolve([].concat.apply([], allArticles));
+      }).catch(err => {
+	      reject(err);
       });
     });
   }

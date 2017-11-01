@@ -14,12 +14,11 @@ class App extends Component {
       sources: []
     }
 
-    Api.getNewsArticles('the-next-web').then(articles => {
-      this.setState({
-        articles: articles
-      })
+    Api.getArticlesFromSources(['the-next-web', 'techcrunch']).then(articles => {
+      console.log(articles);
     });
 
+    this.addSources = (newSources) => this._addSources(newSources);
     this.changePage = (newPage) => this._changePage(newPage);
   }
 
@@ -27,6 +26,12 @@ class App extends Component {
     this.setState({
       page: newPage
     })
+  }
+
+  _addSources(newSources) {
+    this.setState({
+      sources: this.state.sources.concat(newSources)
+    });
   }
 
   render() {
