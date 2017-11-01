@@ -9,8 +9,16 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      page: 'landingPage'
+      page: 'landingPage',
+      articles: [],
+      sources: []
     }
+
+    Api.getNewsArticles('the-next-web').then(articles => {
+      this.setState({
+        articles: articles
+      })
+    });
 
     this.changePage = (newPage) => this._changePage(newPage);
   }
