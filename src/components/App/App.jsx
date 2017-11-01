@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import LandingPage from './../LandingPage/LandingPage';
 import FirstQuestion from './../Questions/Questions';
+import Api from './../../api';
 import s from './App.scss';
 
 
