@@ -14,10 +14,6 @@ class App extends Component {
       sources: []
     }
 
-    Api.getArticlesFromSources(['the-next-web', 'techcrunch']).then(articles => {
-      console.log(articles);
-    });
-
     this.addSources = (newSources) => this._addSources(newSources);
     this.changePage = (newPage) => this._changePage(newPage);
   }
