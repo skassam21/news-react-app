@@ -68,9 +68,23 @@ var Api = {
       for (let idx in sources) {
         promises.push(Api.getArticlesFromSource(sources[idx]));
       }
-      Promise.all(promises).then(allArticles => {
-        // Merge all the arrays into one array
-        resolve([].concat.apply([], allArticles));
+      promises.push(Api.getNewsSources());
+      Promise.all(promises).then(values => {
+        let newsSources = values[values.length - 1];
+        let allArticles = values.slice(0, values.length - 1);
+        let sourcesDict = {};
+        for (let i in newsSources) {
+          sourcesDict[newsSources[i].id] = newsSources[i];
+        }
+        let articles = [];
+        for (let i in allArticles) {
+          for (let j in values[i]) {
+            let article = allArticles[i][j];
+            article.source = sourcesDict[sources[i]];
+            articles.push(article);
+          }
+        }
+        resolve(articles);
       }).catch(err => {
 	      reject(err);
       });
