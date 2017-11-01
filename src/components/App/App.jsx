@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import LandingPage from './../LandingPage/LandingPage';
 import FirstQuestion from './../Questions/Questions';
+import FeedPage from './../Feed/FeedPage';
 import s from './App.scss';
 
 
@@ -8,7 +9,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      page: 'landingPage'
+      page: 'feed'
     }
 
     this.changePage = (newPage) => this._changePage(newPage);
@@ -27,6 +28,8 @@ class App extends Component {
       pageView = <LandingPage changePage={this.changePage} />;
     } else if (this.state.page === 'firstQuestion') {
       pageView = <FirstQuestion />;
+    } else if (this.state.page === 'feed') {
+      pageView = <FeedPage changePage={this.changePage}/>;
     }
 
     let styles = {
