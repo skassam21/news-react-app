@@ -6,13 +6,31 @@ import Api from './../../api';
 import s from './App.scss';
 
 const ARTICLES = [
+
 {
-author: "Khaled Tito Hamze",
-title: "Crunch Report",
-description: "Your daily roundup of the biggest TechCrunch stories and startup news.",
-url: "https://techcrunch.com/video/crunchreport/",
-urlToImage: "https://tctechcrunch2011.files.wordpress.com/2015/03/tccrshowogo.jpg?w=500&h=200&crop=1",
-publishedAt: "2017-10-30T20:00:57Z"
+  author: "Khaled Tito Hamze",
+  title: "Crunch Report",
+  description: "Your daily roundup of the biggest TechCrunch stories and startup news.",
+  url: "https://techcrunch.com/video/crunchreport/",
+  urlToImage: "https://tctechcrunch2011.files.wordpress.com/2015/03/tccrshowogo.jpg?w=500&h=200&crop=1",
+  publishedAt: "2017-10-30T20:00:57Z",
+  source: {
+    "id": "abc-news-au",
+    "name": "ABC News (AU)",
+    "description": "Australia's most trusted source of local, national and world news. Comprehensive, independent, in-depth analysis, the latest business, sport, weather and more.",
+    "url": "http://www.abc.net.au/news",
+    "category": "general",
+    "language": "en",
+    "country": "au",
+    "urlsToLogos": {
+    "small": "",
+    "medium": "",
+    "large": ""
+},
+"sortBysAvailable": [
+"top"
+]
+}
 },
 {
 author: "Rachel Kaser",
