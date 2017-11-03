@@ -21,7 +21,7 @@ class App extends Component {
   _changePage(newPage) {
     this.setState({
       page: newPage
-    })
+    });
   }
 
   _addSources(newSources) {
