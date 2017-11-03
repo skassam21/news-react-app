@@ -53,13 +53,8 @@ class App extends Component {
       pageView = <ThirdQuestion changePage={this.changePage} addSources={this.addSources}/>;
     }
 
-    let styles = {
-      textAlign: 'center',
-      paddingTop: '200px'
-    }
-
     return (
-      <div className="intro-page container" style={styles}>
+      <div className="intro-page container">
         {pageView}
       </div>
     )
