@@ -8,7 +8,7 @@ class ThirdQuestion extends Component {
 	this.addToList = (e) => this._addToList(e);
 	this.dispenseOption = () => this._dispenseOption();
 	this.sourceList = [];
-	
+
 	// Create the dispenser options
 	this.options = ['Circle', 'Triangle', 'Square', 'Pentagon', 'Hexagon', 'Octagon'];
 	this.optionMap = {
@@ -20,17 +20,17 @@ class ThirdQuestion extends Component {
 		Octagon : 'hacker-news',
 	};
   }
-	
-	
+
+
   /*
   Call this function to change pages and submit list
   */
   _change() {
-	this.props.addSources(this.sourceList);
-    this.props.changePage('landingPage');
+	   this.props.addSources(this.sourceList);
+     this.props.changePage('feed');
   }
-  
-  
+
+
   /*
   Add corresponding source to source list.
   */
@@ -42,12 +42,12 @@ class ThirdQuestion extends Component {
 	  }
 	  else{
 		var indexOfElement = this.sourceList.indexOf(obj)
-		this.sourceList.splice(indexOfElement, 1); 
+		this.sourceList.splice(indexOfElement, 1);
 	  }
 	//console.log(this.sourceList);
   }
-  
-  
+
+
   /*
   Dispense a random option from a prefixed list.
   */
@@ -57,7 +57,7 @@ class ThirdQuestion extends Component {
 	return item;
   }
 
-  
+
   render() {
 
     let jumbotronStyle = {
@@ -78,7 +78,7 @@ class ThirdQuestion extends Component {
       userSelect: 'none',
 	  margin: 0,
     }
-	
+
 	let questionFontSmall = {
       fontFamily: 'TimesNewRoman,Times New Roman,Times,Baskerville,Georgia,serif',
       fontSize: '18px',
@@ -93,12 +93,12 @@ class ThirdQuestion extends Component {
       marginLeft: '20px',
       userSelect: 'none',
     }
-	
+
 	var option1 = this.dispenseOption();
 	var option2 = this.dispenseOption();
 	var option3 = this.dispenseOption();
 	var option4 = this.dispenseOption();
-	
+
 	// Using sample question for now. CHANGE LATER!
     return (
         <div className="jumbotron" style={jumbotronStyle}>
@@ -128,7 +128,7 @@ class ThirdQuestion extends Component {
         </div>
     )
   }
-  
+
 }
 
 export default ThirdQuestion;

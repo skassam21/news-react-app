@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import LandingPage from './../LandingPage/LandingPage';
+import FeedPage from './../Feed/FeedPage';
 import FirstQuestion from './../Questions/FirstQuestion';
 import SecondQuestion from './../Questions/SecondQuestion';
 import ThirdQuestion from './../Questions/ThirdQuestion';
-import Api from './../../api';
 import s from './App.scss';
 
 
@@ -12,7 +12,6 @@ class App extends Component {
     super(props);
     this.state = {
       page: 'landingPage',
-      articles: [],
       sources: []
     }
 
@@ -26,18 +25,10 @@ class App extends Component {
     });
   }
 
-  _addSources(newSources) {
+  _addSources(newSources, callback) {
     this.setState({
       sources: this.state.sources.concat(newSources)
-    });
-  }
-
-  _addSources(newSources) {
-	//console.log(newSources);
-	for (var i = 0; i < newSources.length; i++) {
-		this.state.sources.push(newSources[i]);
-	}
-	console.log(this.state.sources);
+    }, callback);
   }
 
   render() {
@@ -51,10 +42,12 @@ class App extends Component {
       pageView = <SecondQuestion changePage={this.changePage} addSources={this.addSources}/>;
     } else if (this.state.page === 'thirdQuestion') {
       pageView = <ThirdQuestion changePage={this.changePage} addSources={this.addSources}/>;
+    } else if (this.state.page === 'feed') {
+      pageView = <FeedPage sources={this.state.sources} />
     }
 
     return (
-      <div className="intro-page container">
+      <div className="intro-page">
         {pageView}
       </div>
     )
