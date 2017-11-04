@@ -72,13 +72,22 @@ class ArticleView extends Component {
 class SourceView extends Component {
   constructor(props) {
     super(props);
+
+    this.selectSource = () => this._selectSource();
+  }
+
+  _selectSource() {
+    this.props.onSelectSource(this.props.source);
   }
 
   render() {
-    console.log(this.props.selectedSources);
+    let checked = true;
+    if ($.inArray(this.props.source.id, this.props.selectedSources) < 0) {
+      checked = false;
+    }
     return (
       <div className="checkbox">
-        <label><input type="checkbox" value=""></input>{this.props.source.name}</label>
+        <label><input type="checkbox" value={this.props.source.id} defaultChecked={checked} onChange={this.selectSource}></input>{this.props.source.name}</label>
       </div>
     )
   }
@@ -114,13 +123,12 @@ class FeedPage extends Component {
       sources: [],
       selectedSources: []
     }
+
+    this.onSelectSource = (selectedSource) => this._onSelectSource(selectedSource);
+    this.fetchArticles = (selectedSources) => this._fetchArticles(selectedSources);
   }
 
-  componentDidMount() {
-    let selectedSources = this.props.sources;
-    if (selectedSources.length === 0) {
-      selectedSources = ['bbc-news', 'techcrunch', 'business-insider', 'google-news']
-    }
+  _fetchArticles(selectedSources) {
     // Get the articles
     Api.getArticlesFromSources(selectedSources).then(articles => {
       if (articles.length > 0) {
@@ -130,8 +138,8 @@ class FeedPage extends Component {
         });
       } else {
         // Get the default sources
-        let selectedSources = ['bbc-news', 'techcrunch', 'business-insider', 'google-news']
-        Api.getArticlesFromSources(sources).then(articles => {
+        let selectedSources = ['bbc-news', 'techcrunch', 'business-insider', 'google-news'];
+        Api.getArticlesFromSources(selectedSources).then(articles => {
           this.setState({
               articles: articles,
               selectedSources: selectedSources
@@ -139,6 +147,15 @@ class FeedPage extends Component {
         });
       }
     });
+  }
+
+  componentDidMount() {
+    let selectedSources = this.props.sources;
+    if (selectedSources.length === 0) {
+      selectedSources = ['bbc-news', 'techcrunch', 'business-insider', 'google-news'];
+    }
+
+    this.fetchArticles(selectedSources);
 
     // Get the sources
     Api.getNewsSources().then(sources => {
@@ -146,6 +163,28 @@ class FeedPage extends Component {
         sources
       });
     });
+  }
+
+
+  _onSelectSource(selectedSource) {
+    let newSelectedSources = [];
+    let inArray = false;
+    for (let i = 0; i < this.state.selectedSources.length; i++) {
+      if (this.state.selectedSources[i] != selectedSource.id) {
+        newSelectedSources.push(this.state.selectedSources[i]);
+        console.log(newSelectedSources);
+      } else {
+        inArray = true;
+      }
+    }
+
+    if (!inArray) {
+      newSelectedSources.push(selectedSource.id);
+    }
+
+    console.log(newSelectedSources);
+
+    this.fetchArticles(newSelectedSources);
   }
 
 
@@ -159,7 +198,7 @@ class FeedPage extends Component {
           <div className="row" style={{paddingTop: '70px'}}>
               {
                 this.state.articles.map(function(article){
-                  return <ArticleView key={article.title} article={article} />;
+                  return <ArticleView key={article.title + article.source.id} article={article} />;
                 })
               }
         </div>
@@ -169,6 +208,7 @@ class FeedPage extends Component {
     }
 
     let onSelect = this.onSelectSource;
+    let selectedSources = this.state.selectedSources;
 
     return (
     <div>
@@ -185,7 +225,7 @@ class FeedPage extends Component {
               {
                 this.state.sources.map(function(source) {
                   return <SourceView key={source.id} source={source}
-                    onSelectSource={onSelect} selectedSources={this.state.selectedSources} />;
+                    onSelectSource={onSelect} selectedSources={selectedSources}/>;
                 })
               }
             </div>
