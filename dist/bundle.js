@@ -20324,7 +20324,6 @@ var App = function (_Component) {
         sources: newSources,
         questionOptions: this.state.questionOptions
       });
-      console.log(newSources);
     }
   }, {
     key: 'render',
@@ -20406,6 +20405,13 @@ module.exports = __webpack_require__(127);
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+
+var _underscore = __webpack_require__(221);
+
+var _underscore2 = _interopRequireDefault(_underscore);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 var BASE_URL = "https://newsapi.org";
 var SOURCE_URL = BASE_URL + "/v1/sources";
 var ARTICLE_URL = BASE_URL + "/v1/articles";
@@ -20490,7 +20496,8 @@ var Api = {
             articles.push(article);
           }
         }
-        resolve(articles);
+
+        resolve(_underscore2.default.shuffle(articles));
       }).catch(function (err) {
         reject(err);
       });
@@ -20548,62 +20555,82 @@ var ArticleView = function (_Component) {
     key: 'render',
     value: function render() {
       var imgStyle = {
-        background: 'url(' + this.props.article.urlToImage + ') no-repeat center center',
-        height: '200px',
-        width: '100%',
-        webkitBackgroundSize: 'cover',
-        mozBackgroundSize: 'cover',
-        oBackgroundSize: 'cover',
-        backgroundSize: 'cover'
+        backgroundImage: 'url(' + this.props.article.urlToImage + ')',
+        backgroundPosition: 'center center',
+        backgroundRepeat: 'no-repeat',
+        WebkitBackgroundSize: 'cover',
+        MozBackgroundSize: 'cover',
+        OBackgroundSize: 'cover',
+        backgroundSize: 'cover',
+        height: '300px',
+        width: '95%',
+        borderRadius: '10px',
+        margin: '15px auto 0'
       };
 
+      var overlayStyle = {
+        width: '100%',
+        height: '100%',
+        borderRadius: '10px',
+        background: 'rgba(10, 24, 41, 0.5)',
+        color: 'white'
+      };
+
+      var sourceNameStyle = {
+        textTransform: 'uppercase'
+      };
+
+      var textWrapperStyle = {
+        position: 'absolute',
+        width: '85%',
+        bottom: 0,
+        textAlign: 'left',
+        color: 'white',
+        marginLeft: 'auto',
+        marginRight: 'auto',
+        left: '0',
+        right: '0'
+      };
+
+      var date = void 0;
+      var mydate = new Date(this.props.article.publishedAt);
+
       return _react2.default.createElement(
-        'li',
-        { className: 'col-md-6 col-xs-12 life-content oddpost show' },
+        'div',
+        { className: 'col-md-6 col-xs-12' },
         _react2.default.createElement(
-          'div',
-          { className: 'lifeimgcont' },
-          _react2.default.createElement(
-            'a',
-            { href: this.props.article.url },
-            _react2.default.createElement('div', { style: imgStyle,
-              className: 'attachment-post-thumbnail size-post-thumbnail wp-post-image',
-              alt: '', sizes: '(max-width: 510px) 100vw, 510px' }),
-            ' '
-          ),
+          'a',
+          { href: this.props.article.url, target: '_blank' },
           _react2.default.createElement(
             'div',
-            { className: 'eventdate' },
-            ' ',
+            { style: imgStyle },
             _react2.default.createElement(
-              'strong',
-              null,
-              '15'
-            ),
-            ' May '
-          )
-        ),
-        _react2.default.createElement(
-          'h4',
-          { className: 'evntheader' },
-          _react2.default.createElement(
-            'a',
-            { href: '#' },
-            ' ',
-            this.props.article.title,
-            ' '
-          )
-        ),
-        _react2.default.createElement(
-          'article',
-          { id: 'post-316', className: 'post-316 post type-post status-publish format-standard has-post-thumbnail hentry category-health category-inspiration tag-fitness tag-health tag-workout tag-workout-tip' },
-          _react2.default.createElement(
-            'div',
-            { className: 'entry-content' },
-            _react2.default.createElement(
-              'p',
-              null,
-              this.props.article.description
+              'div',
+              { style: overlayStyle },
+              _react2.default.createElement(
+                'div',
+                { style: textWrapperStyle },
+                _react2.default.createElement(
+                  'h3',
+                  { style: sourceNameStyle },
+                  this.props.article.source.name
+                ),
+                _react2.default.createElement(
+                  'h4',
+                  null,
+                  this.props.article.title
+                ),
+                _react2.default.createElement(
+                  'h6',
+                  null,
+                  this.props.article.description
+                ),
+                _react2.default.createElement(
+                  'h6',
+                  null,
+                  mydate.toDateString()
+                )
+              )
             )
           )
         )
@@ -20651,13 +20678,9 @@ var FeedPage = function (_Component2) {
           _react2.default.createElement(
             'div',
             { className: 'row' },
-            _react2.default.createElement(
-              'ul',
-              { id: 'lifegrid' },
-              this.state.articles.map(function (article) {
-                return _react2.default.createElement(ArticleView, { article: article });
-              })
-            )
+            this.state.articles.map(function (article) {
+              return _react2.default.createElement(ArticleView, { key: article.title, article: article });
+            })
           )
         )
       );
@@ -20804,7 +20827,23 @@ var NavBar = function (_Component) {
   _createClass(NavBar, [{
     key: "render",
     value: function render() {
-      return _react2.default.createElement("nav", { className: "navbar navbar-default" });
+      return _react2.default.createElement(
+        "nav",
+        { className: "navbar navbar-inverse" },
+        _react2.default.createElement(
+          "div",
+          { className: "container-fluid" },
+          _react2.default.createElement(
+            "div",
+            { className: "navbar-header" },
+            _react2.default.createElement(
+              "a",
+              { className: "navbar-brand" },
+              "NewsEd"
+            )
+          )
+        )
+      );
     }
   }]);
 
@@ -20829,10 +20868,6 @@ var _createClass = function () { function defineProperties(target, props) { for 
 var _react = __webpack_require__(19);
 
 var _react2 = _interopRequireDefault(_react);
-
-var _underscore = __webpack_require__(221);
-
-var _underscore2 = _interopRequireDefault(_underscore);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -20905,7 +20940,7 @@ var QuestionOption = function (_Component) {
 
       var textStyle = {
         position: 'absolute',
-        width: '80%',
+        width: '85%',
         bottom: 0,
         textAlign: 'center',
         color: 'white',
@@ -23665,7 +23700,7 @@ exports = module.exports = __webpack_require__(54)(undefined);
 exports.i(__webpack_require__(112), "");
 
 // module
-exports.push([module.i, "/*\n * Colors\n * ========================================================================== */\n/*\n * Typography\n * ========================================================================== */\n/*\n * Base styles\n * ========================================================================== */\nh1, h2, h3, h4, h5, h6, button {\n  font-family: \"Raleway\", sans-serif; }\n\nh1 {\n  font-size: 48px; }\n\np {\n  font-family: \"Open Sans\", \"Raleway\", sans-serif;\n  font-size: 16px; }\n\nbody {\n  background: #ECFFFF; }\n\nbutton.btn-primary {\n  background: none;\n  border: 0;\n  border-bottom: 2px solid #0A1829;\n  font-family: 100;\n  color: #0A1829;\n  text-transform: uppercase; }\n\nbutton.btn-primary:hover, button.btn-primary:active, button.btn-primary:focus {\n  color: white;\n  background: #0A1829; }\n\n.navbar-default.navbar {\n  background: #0A1829;\n  border-color: #0A1829; }\n", ""]);
+exports.push([module.i, "/*\n * Colors\n * ========================================================================== */\n/*\n * Typography\n * ========================================================================== */\n/*\n * Base styles\n * ========================================================================== */\nh1, h2, h3, h4, h5, h6, button {\n  font-family: \"Raleway\", sans-serif; }\n\nh1 {\n  font-size: 48px; }\n\np {\n  font-family: \"Open Sans\", \"Raleway\", sans-serif;\n  font-size: 16px; }\n\nbody {\n  background: #ECFFFF; }\n\nbutton.btn-primary {\n  background: none;\n  border: 0;\n  border-bottom: 2px solid #0A1829;\n  font-family: 100;\n  color: #0A1829;\n  text-transform: uppercase; }\n\nbutton.btn-primary:hover, button.btn-primary:active, button.btn-primary:focus {\n  color: white;\n  background: #0A1829; }\n\n.navbar-inverse.navbar {\n  background: #0A1829;\n  border-color: #0A1829;\n  color: white; }\n  .navbar-inverse.navbar .navbar-brand {\n    color: white; }\n", ""]);
 
 // exports
 
