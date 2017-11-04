@@ -11,33 +11,61 @@ class ArticleView extends Component {
 
   render() {
     let imgStyle = {
-      background: 'url(' + this.props.article.urlToImage + ') no-repeat center center',
-      height: '200px',
-      width: '100%',
-      webkitBackgroundSize: 'cover',
-      mozBackgroundSize: 'cover',
-      oBackgroundSize: 'cover',
-      backgroundSize: 'cover'
+      backgroundImage: 'url(' + this.props.article.urlToImage + ')',
+      backgroundPosition: 'center center',
+      backgroundRepeat: 'no-repeat',
+      WebkitBackgroundSize: 'cover',
+      MozBackgroundSize: 'cover',
+      OBackgroundSize: 'cover',
+      backgroundSize: 'cover',
+      height: '300px',
+      width: '95%',
+      borderRadius: '10px',
+      margin: '15px auto 0'
     }
 
+    let overlayStyle = {
+      width: '100%',
+      height: '100%',
+      borderRadius: '10px',
+      background: 'rgba(10, 24, 41, 0.5)',
+      color: 'white'
+    }
+
+    let sourceNameStyle = {
+      textTransform: 'uppercase'
+    }
+
+    let textWrapperStyle = {
+      position: 'absolute',
+      width: '85%',
+      bottom: 0,
+      textAlign: 'left',
+      color: 'white',
+      marginLeft: 'auto',
+      marginRight: 'auto',
+      left: '0',
+      right: '0'
+    }
+
+    let date
+    let mydate = new Date(this.props.article.publishedAt);
+
     return (
-      <li className="col-md-6 col-xs-12 life-content oddpost show">
-      <div className="lifeimgcont">
-        <a href={this.props.article.url}>
-          <div style={imgStyle}
-            className="attachment-post-thumbnail size-post-thumbnail wp-post-image"
-            alt="" sizes="(max-width: 510px) 100vw, 510px"></div> </a>
-        <div className="eventdate"> <strong>15</strong> May </div>
-      </div>
-      <h4 className="evntheader"><a href="#"> {this.props.article.title} </a></h4>
-      <article id="post-316" className="post-316 post type-post status-publish
-        format-standard has-post-thumbnail hentry category-health
-        category-inspiration tag-fitness tag-health tag-workout tag-workout-tip">
-        <div className="entry-content">
-          <p>{this.props.article.description}</p>
-        </div>
-      </article>
-      </li>
+      <div className="col-md-6 col-xs-12">
+        <a href={this.props.article.url} target="_blank">
+          <div style={imgStyle}>
+            <div style={overlayStyle}>
+              <div style={textWrapperStyle}>
+                <h3 style={sourceNameStyle}>{this.props.article.source.name}</h3>
+                <h4>{this.props.article.title}</h4>
+                <h6>{this.props.article.description}</h6>
+                <h6>{mydate.toDateString()}</h6>
+              </div>
+            </div>
+          </div>
+        </a>
+    </div>
     )
   }
 }
@@ -70,14 +98,11 @@ class FeedPage extends Component {
       <NavBar />
       <div className="container">
           <div className="row">
-            <ul id="lifegrid">
               {
                 this.state.articles.map(function(article){
-                  return <ArticleView article={article} />;
+                  return <ArticleView key={article.title} article={article} />;
                 })
               }
-
-            </ul>
         </div>
       </div>
     </div>

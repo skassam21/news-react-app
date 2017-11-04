@@ -35,3 +35,12 @@ button.btn-primary:hover, button.btn-primary:active, button.btn-primary:focus {
   color: white;
   background: $dark-blue;
 }
+
+.navbar-inverse.navbar {
+  background: $dark-blue;
+  border-color: $dark-blue;
+  color: white;
+  .navbar-brand {
+    color: white;
+  }
+}
