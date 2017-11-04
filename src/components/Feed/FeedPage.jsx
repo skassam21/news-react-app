@@ -74,6 +74,17 @@ class LoadingView extends Component {
     super(props);
   }
 
+  render() {
+    return (
+      <div className="spinner-wrapper">
+            <div className="bubblingG">
+                <span id="bubblingG_1"></span>
+                <span id="bubblingG_2"></span>
+                <span id="bubblingG_3"></span>
+            </div>
+        </div>
+    )
+  }
 }
 
 
@@ -88,9 +99,15 @@ class FeedPage extends Component {
 
   componentDidMount() {
     Api.getArticlesFromSources(this.props.sources).then(articles => {
-      this.setState({
-          articles: articles
-      });
+      if (articles) {
+        this.setState({
+            articles: articles
+        });
+      } else {
+        this.setState({
+            articles: null
+        });
+      }
     });
   }
 
@@ -100,7 +117,7 @@ class FeedPage extends Component {
 
     let view = null;
 
-    if (this.state.articles) {
+    if (this.state.articles.length > 0) {
       view = (<div className="container">
           <div className="row" style={{paddingTop: '70px'}}>
               {
