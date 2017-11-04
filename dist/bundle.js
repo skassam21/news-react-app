@@ -20551,7 +20551,7 @@ exports.default = Api;
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-
+/* WEBPACK VAR INJECTION */(function($) {
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -20684,20 +20684,33 @@ var SourceView = function (_Component2) {
   function SourceView(props) {
     _classCallCheck(this, SourceView);
 
-    return _possibleConstructorReturn(this, (SourceView.__proto__ || Object.getPrototypeOf(SourceView)).call(this, props));
+    var _this2 = _possibleConstructorReturn(this, (SourceView.__proto__ || Object.getPrototypeOf(SourceView)).call(this, props));
+
+    _this2.selectSource = function () {
+      return _this2._selectSource();
+    };
+    return _this2;
   }
 
   _createClass(SourceView, [{
+    key: '_selectSource',
+    value: function _selectSource() {
+      this.props.onSelectSource(this.props.source);
+    }
+  }, {
     key: 'render',
     value: function render() {
-      console.log(this.props.selectedSources);
+      var checked = true;
+      if ($.inArray(this.props.source.id, this.props.selectedSources) < 0) {
+        checked = false;
+      }
       return _react2.default.createElement(
         'div',
         { className: 'checkbox' },
         _react2.default.createElement(
           'label',
           null,
-          _react2.default.createElement('input', { type: 'checkbox', value: '' }),
+          _react2.default.createElement('input', { type: 'checkbox', value: this.props.source.id, defaultChecked: checked, onChange: this.selectSource }),
           this.props.source.name
         )
       );
@@ -20749,18 +20762,21 @@ var FeedPage = function (_Component4) {
       sources: [],
       selectedSources: []
     };
+
+    _this4.onSelectSource = function (selectedSource) {
+      return _this4._onSelectSource(selectedSource);
+    };
+    _this4.fetchArticles = function (selectedSources) {
+      return _this4._fetchArticles(selectedSources);
+    };
     return _this4;
   }
 
   _createClass(FeedPage, [{
-    key: 'componentDidMount',
-    value: function componentDidMount() {
+    key: '_fetchArticles',
+    value: function _fetchArticles(selectedSources) {
       var _this5 = this;
 
-      var selectedSources = this.props.sources;
-      if (selectedSources.length === 0) {
-        selectedSources = ['bbc-news', 'techcrunch', 'business-insider', 'google-news'];
-      }
       // Get the articles
       _api2.default.getArticlesFromSources(selectedSources).then(function (articles) {
         if (articles.length > 0) {
@@ -20771,7 +20787,7 @@ var FeedPage = function (_Component4) {
         } else {
           // Get the default sources
           var _selectedSources = ['bbc-news', 'techcrunch', 'business-insider', 'google-news'];
-          _api2.default.getArticlesFromSources(sources).then(function (articles) {
+          _api2.default.getArticlesFromSources(_selectedSources).then(function (articles) {
             _this5.setState({
               articles: articles,
               selectedSources: _selectedSources
@@ -20779,13 +20795,47 @@ var FeedPage = function (_Component4) {
           });
         }
       });
+    }
+  }, {
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      var _this6 = this;
+
+      var selectedSources = this.props.sources;
+      if (selectedSources.length === 0) {
+        selectedSources = ['bbc-news', 'techcrunch', 'business-insider', 'google-news'];
+      }
+
+      this.fetchArticles(selectedSources);
 
       // Get the sources
       _api2.default.getNewsSources().then(function (sources) {
-        _this5.setState({
+        _this6.setState({
           sources: sources
         });
       });
+    }
+  }, {
+    key: '_onSelectSource',
+    value: function _onSelectSource(selectedSource) {
+      var newSelectedSources = [];
+      var inArray = false;
+      for (var i = 0; i < this.state.selectedSources.length; i++) {
+        if (this.state.selectedSources[i] != selectedSource.id) {
+          newSelectedSources.push(this.state.selectedSources[i]);
+          console.log(newSelectedSources);
+        } else {
+          inArray = true;
+        }
+      }
+
+      if (!inArray) {
+        newSelectedSources.push(selectedSource.id);
+      }
+
+      console.log(newSelectedSources);
+
+      this.fetchArticles(newSelectedSources);
     }
   }, {
     key: 'render',
@@ -20801,7 +20851,7 @@ var FeedPage = function (_Component4) {
             'div',
             { className: 'row', style: { paddingTop: '70px' } },
             this.state.articles.map(function (article) {
-              return _react2.default.createElement(ArticleView, { key: article.title, article: article });
+              return _react2.default.createElement(ArticleView, { key: article.title + article.source.id, article: article });
             })
           )
         );
@@ -20810,6 +20860,7 @@ var FeedPage = function (_Component4) {
       }
 
       var onSelect = this.onSelectSource;
+      var selectedSources = this.state.selectedSources;
 
       return _react2.default.createElement(
         'div',
@@ -20844,7 +20895,7 @@ var FeedPage = function (_Component4) {
                 { className: 'modal-body' },
                 this.state.sources.map(function (source) {
                   return _react2.default.createElement(SourceView, { key: source.id, source: source,
-                    onSelectSource: onSelect, selectedSources: this.state.selectedSources });
+                    onSelectSource: onSelect, selectedSources: selectedSources });
                 })
               ),
               _react2.default.createElement(
@@ -20867,6 +20918,7 @@ var FeedPage = function (_Component4) {
 }(_react.Component);
 
 exports.default = FeedPage;
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(7)))
 
 /***/ }),
 /* 95 */
