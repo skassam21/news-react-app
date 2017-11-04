@@ -5,16 +5,33 @@
  * Base styles
  * ========================================================================== */
 
-html {
-  color: #222;
-  font-weight: 100;
-  font-size: 1em; /* ~16px; */
-  font-family: $font-family-base;
-  line-height: 1.375; /* ~22px */
+h1, h2, h3, h4, h5, h6, button {
+  font-family: $font-family-headings;
 }
 
-.container {
-  margin: 0 auto;
-  padding: 0 0 40px;
-  max-width: $max-content-width;
+h1 {
+  font-size: 48px;
+}
+
+p {
+  font-family: $font-family-base;
+  font-size: 16px;
+}
+
+body {
+  background: $light-blue3;
+}
+
+button.btn-primary {
+  background: none;
+  border: 0;
+  border-bottom: 2px solid $dark-blue;
+  font-family: 100;
+  color: $dark-blue;
+  text-transform: uppercase;
+}
+
+button.btn-primary:hover, button.btn-primary:active, button.btn-primary:focus {
+  color: white;
+  background: $dark-blue;
 }
