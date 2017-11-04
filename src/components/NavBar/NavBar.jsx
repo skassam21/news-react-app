@@ -8,7 +8,8 @@ class NavBar extends Component {
 
   render() {
     return (
-      <nav className="navbar navbar-default">
+      <nav className="navbar navbar-dark">
+        <a class="navbar-brand">NewsEd</a>
       </nav>
     )
   }

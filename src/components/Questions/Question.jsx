@@ -1,140 +1,152 @@
 import React, { Component } from 'react';
+import _ from '../../../node_modules/underscore/underscore.js';
 
+class QuestionOption extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      hover: false
+    }
+
+    this.toggleHover = () => this._toggleHover();
+    this.onClickImg = () => this._onClickImg();
+  }
+
+  _toggleHover() {
+    this.setState({hover: !this.state.hover});
+  }
+
+  _onClickImg() {
+    this.props.onClickImg(this.props.options);
+  }
+
+
+  render() {
+    let imgStyle = {
+      backgroundImage: 'url(' + this.props.options.img + ')',
+      backgroundPosition: 'center center',
+      backgroundRepeat: 'no-repeat',
+      WebkitBackgroundSize: 'cover',
+      MozBackgroundSize: 'cover',
+      OBackgroundSize: 'cover',
+      backgroundSize: 'cover',
+      height: '150px',
+      width: '95%',
+      margin: '20px auto 0',
+      borderRadius: '10px',
+      cursor: 'pointer'
+    }
+
+    let overlayStyle = {
+      width: '100%',
+      height: '100%',
+      borderRadius: '10px'
+    }
+
+    if (this.props.options.isActive) {
+      overlayStyle.background = 'rgba(10, 24, 41, 0.85)';
+    } else {
+      overlayStyle.background = 'rgba(10, 24, 41, 0.5)';
+    }
+
+    let textStyle = {
+      position: 'absolute',
+      width: '80%',
+      bottom: 0,
+      textAlign: 'center',
+      color: 'white',
+      marginLeft: 'auto',
+      marginRight: 'auto',
+      left: '0',
+      right: '0'
+    }
+
+    if (this.state.hover) {
+      textStyle.color = 'rgba(255, 255, 255, 0.7)';
+    } else {
+      textStyle.color = 'white';
+    }
+
+    return (
+      <div className="col-md-4">
+        <div style={imgStyle} onClick={this.onClickImg} onMouseEnter={this.toggleHover} onMouseLeave={this.toggleHover}>
+          <div style={overlayStyle}>
+            <p style={textStyle}>{this.props.options.question}</p>
+          </div>
+        </div>
+      </div>
+    )
+  }
+}
 
 class Question extends Component {
   constructor(props) {
     super(props);
 
-    this.goNext = () => this._goNext();
-	  this.addToList = (e) => this._addToList(e);
-	  this.dispenseOption = () => this._dispenseOption();
-	  this.sourceList = [];
+    this.state = {
+      activeIds: []
+    }
 
-	// Create the dispenser options
-	this.options = ['Artificial Intelligence', 'Penguins', 'Flying Cars', 'Cat Videos', 'First World Economy', 'Political Scandals'];
-	this.optionMap = {
-		'Political Scandals' : 'usa-today',
-		'Artificial Intelligence' : 'google-news',
-		'Penguins' : 'national-geographic',
-		'Flying Cars' : 'techradar',
-		'Cat Videos' : 'buzzfeed',
-		'First World Economy' : 'business-insider',
-	};
-	this.option1 = this.dispenseOption();
-	this.option2 = this.dispenseOption();
-	this.option3 = this.dispenseOption();
-	this.option4 = this.dispenseOption();
+    this.nextQuestion = () => this._nextQuestion();
+    this.onClickOption = (selectedOption) => this._onClickOption(selectedOption);
+
   }
 
+  _onClickOption(selectedOption) {
+    this.props.editSources(selectedOption);
+  }
 
   /*
   Call this function to change pages and submit list
   */
-  _goNext() {
-	this.props.addSources(this.sourceList);
-    this.props.changePage('secondQuestion');
+  _nextQuestion() {
+    // If they are none, show an error
+
+    // Reset state of question
+    this.setState({
+      activeIds: []
+    });
+    this.props.changePage(this.props.nextPage);
   }
-
-
-  /*
-  Add corresponding source to source list.
-  */
-  _addToList(e){
-	 var item = e.target.value;
-	 var obj = this.optionMap[item];
-	  if(this.sourceList.indexOf(obj) < 0){
-		this.sourceList.push(obj);
-	  }
-	  else{
-		var indexOfElement = this.sourceList.indexOf(obj)
-		this.sourceList.splice(indexOfElement, 1);
-	  }
-	//console.log(this.sourceList);
-  }
-
-
-  /*
-  Dispense a random option from a prefixed list.
-  */
-  _dispenseOption(){
-	var item = this.options[Math.floor(Math.random()* this.options.length)];
-	this.options.splice(this.options.indexOf(item), 1);
-	return item;
-  }
-
 
   render() {
 
-    let jumbotronStyle = {
-      backgroundColor: '#aee58b',
-	  borderRadius: '20px',
-	  border: '2px solid black',
-	  textAlign: 'center',
-      width: '60%',
-	  margin: 'auto',
-	  position: 'absolute',
-	  top : '20%',
-	  left : '0',
-      right : '0',
+    let containerStyle = {
+      textAlign: 'center',
+       margin: 'auto',
+       position: 'absolute',
+       top : '10%',
+       left : '0',
+       right : '0'
     }
 
-    let questionFont = {
-      fontFamily: 'TimesNewRoman,Times New Roman,Times,Baskerville,Georgia,serif',
-      fontSize: '36px',
-      userSelect: 'none',
-	  margin: 0,
-    }
+    let onClickMethod = this.onClickOption;
 
-	let questionFontSmall = {
-      fontFamily: 'TimesNewRoman,Times New Roman,Times,Baskerville,Georgia,serif',
-      fontSize: '18px',
-      userSelect: 'none',
-	  fontStyle: 'italics',
-	  margin: '5px',
-	  marginBottom: '30px',
-    }
-
-    let optionFont = {
-      fontFamily: 'TimesNewRoman,Times New Roman,Times,Baskerville,Georgia,serif',
-      fontSize: '18px',
-      marginLeft: '20px',
-      userSelect: 'none',
-    }
-
-
-
-	// Using sample question for now. CHANGE LATER!
     return (
-        <div className="jumbotron" style={jumbotronStyle}>
-          <h1 style={questionFont}>First tell us a little about yourself</h1>
-		  <h1 style={questionFontSmall}>What are some things here that interests you?</h1>
-		  <br/>
+        <div className="container" style={containerStyle}>
           <div className="row">
-            <div className="col-md-6">
-              <label>
-                <input value={this.option1} onClick={this.addToList} type="checkbox"/><span style={optionFont}>{this.option1}</span>
-              </label><br/>
-              <label>
-                <input value={this.option2} onClick={this.addToList} type="checkbox"/><span style={optionFont}>{this.option2}</span>
-              </label><br/>
-            </div>
-            <div className="col-md-6">
-              <label>
-                <input value={this.option3} onClick={this.addToList} type="checkbox"/><span style={optionFont}>{this.option3}</span>
-              </label><br/>
-              <label>
-                <input value={this.option4} onClick={this.addToList} type="checkbox"/><span style={optionFont}>{this.option4}</span>
-              </label><br/>
+            <div className="col-lg-10 col-lg-offset-1">
+              <h1>{this.props.titleQuestion}</h1>
+    		      <p>{this.props.question}</p>
             </div>
           </div>
-		  <div style={{marginTop: '30px'}}>
-          <button className="btn btn-primary" onClick={this.goNext}
-            style={{margin: '5px'}}>Next</button>
-		  </div>
+          <div className="row">
+            {
+              this.props.options.map(function(options) {
+                return <QuestionOption key={options.id} options={options} onClickImg={onClickMethod} />;
+              })
+            }
+          </div>
+          <div className="row">
+            <div style={{marginTop: '30px'}}>
+                <button className="btn btn-primary" onClick={this.nextQuestion}
+                  style={{margin: '5px'}}>Next</button>
+            </div>
+          </div>
         </div>
     )
   }
 
 }
 
-export default FirstQuestion;
+export default Question;
