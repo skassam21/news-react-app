@@ -13,14 +13,43 @@ class LandingPage extends Component {
 
 
   render() {
+	  
+	  let jumbotronStyle = {
+      backgroundColor: '#fcde64',
+	  borderRadius: '20px',
+	  border: '2px solid black',
+	  textAlign: 'center',
+      width: '60%',
+	  margin: 'auto',
+	  position: 'absolute',
+	  top : '20%',
+	  left : '0',
+      right : '0',
+    }
+
+    let questionFont = {
+      fontFamily: 'TimesNewRoman,Times New Roman,Times,Baskerville,Georgia,serif',
+      fontSize: '36px',
+      userSelect: 'none',
+	  margin: 0,
+    }
+	
+	let questionFontSmall = {
+      fontFamily: 'TimesNewRoman,Times New Roman,Times,Baskerville,Georgia,serif',
+      fontSize: '18px',
+      userSelect: 'none',
+	  fontStyle: 'italics',
+	  margin: '15px',
+    }
+	  
     return (
-      <div className="row">
-        <div className="col-lg-12">
-          <h1>Welcome to NewsEd!</h1>
+      <div className="jumbotron" style={jumbotronStyle}>
+          <h1 style={questionFont}>Welcome to NewsEd!</h1>
+		  <h1 style={questionFontSmall}>An application to help you find interesting news articles</h1>
+		  <br/>
           <button className="btn btn-primary" onClick={this.getStarted}
-            style={{marginTop: '20px'}}>Get Started</button>
+            style={{margin: '5px'}}>Get Started</button>
         </div>
-      </div>
     )
   }
 }

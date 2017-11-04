@@ -10,16 +10,14 @@ class SecondQuestion extends Component {
 	this.sourceList = [];
 	
 	// Create the dispenser options
-	this.options = ['Blue', 'Green', 'Brown', 'Purple', 'Red', 'Yellow', 'Pink', 'Orange'];
+	this.options = ['Next Lottery Numbers', 'Superpowers', 'The Truth', 'Unlimited Knowledge', 'A Nice Long Break', 'Some Sleep'];
 	this.optionMap = {
-		Blue : 'buzzfeed',
-		Green : 'business-insider',
-		Brown : 'google-news',
-		Purple : 'national-geographic',
-		Red : 'mtv-news',
-		Yellow : 'usa-today',
-		Pink : 'metro',
-		Orange : 'espn',
+		'Next Lottery Numbers' : 'mtv-news',
+		'Superpowers' : 'espn',
+		'The Truth' : 'bbc-news',
+		'Unlimited Knowledge' : 'the-telegraph',
+		'A Nice Long Break' : 'ign',
+		'Some Sleep' : 'cnn',
 	};
   }
 	
@@ -63,14 +61,15 @@ class SecondQuestion extends Component {
   render() {
 
     let jumbotronStyle = {
-      backgroundColor: 'white',
-      borderRadius: '10px',
-      width: '75%',
+      backgroundColor: '#98bdf9',
+	  borderRadius: '20px',
+	  border: '2px solid black',
+	  textAlign: 'center',
+      width: '60%',
 	  margin: 'auto',
 	  position: 'absolute',
-	  top : '0',
+	  top : '20%',
 	  left : '0',
-      bottom : '0',
       right : '0',
     }
 
@@ -86,7 +85,8 @@ class SecondQuestion extends Component {
       fontSize: '18px',
       userSelect: 'none',
 	  fontStyle: 'italics',
-	  margin: 5,
+	  margin: '5px',
+	  marginBottom: '30px',
     }
 
     let optionFont = {
@@ -104,8 +104,8 @@ class SecondQuestion extends Component {
 	// Using sample question for now. CHANGE LATER!
     return (
         <div className="jumbotron" style={jumbotronStyle}>
-          <h1 style={questionFont}>Now choose some funky colors!</h1>
-		  <h1 style={questionFontSmall}>You can pick more than one</h1>
+          <h1 style={questionFont}>What are some things you wish you had?</h1>
+		  <h1 style={questionFontSmall}>Pick as many as you like!</h1>
 		  <br/>
           <div className="row">
             <div className="col-md-6">

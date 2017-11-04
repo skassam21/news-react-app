@@ -10,19 +10,19 @@ class FirstQuestion extends Component {
 	this.sourceList = [];
 	
 	// Create the dispenser options
-	this.options = ['Apple', 'Banana', 'Orange', 'Mango', 'Strawberry', 'Grape', 'Peach', 'Cherry', 'Pineapple', 'Watermelon'];
+	this.options = ['Artificial Intelligence', 'Penguins', 'Flying Cars', 'Cat Videos', 'First World Economy', 'Political Scandals'];
 	this.optionMap = {
-		Apple : 'bbc-news',
-		Banana : 'cnn',
-		Orange : 'the-guardian-uk',
-		Mango : 'the-new-york-times',
-		Strawberry : 'the-telegraph',
-		Grape : 'time',
-		Peach : 'techcrunch',
-		Cherry : 'financial-times',
-		Pineapple : 'cnbc',
-		Watermelon : 'polygon',
+		'Political Scandals' : 'usa-today',
+		'Artificial Intelligence' : 'google-news',
+		'Penguins' : 'national-geographic',
+		'Flying Cars' : 'techradar',
+		'Cat Videos' : 'buzzfeed',
+		'First World Economy' : 'business-insider',
 	};
+	this.option1 = this.dispenseOption();
+	this.option2 = this.dispenseOption();
+	this.option3 = this.dispenseOption();
+	this.option4 = this.dispenseOption();
   }
 	
 	
@@ -65,14 +65,15 @@ class FirstQuestion extends Component {
   render() {
 
     let jumbotronStyle = {
-      backgroundColor: 'white',
-      borderRadius: '10px',
-      width: '75%',
+      backgroundColor: '#aee58b',
+	  borderRadius: '20px',
+	  border: '2px solid black',
+	  textAlign: 'center',
+      width: '60%',
 	  margin: 'auto',
 	  position: 'absolute',
-	  top : '0',
+	  top : '20%',
 	  left : '0',
-      bottom : '0',
       right : '0',
     }
 
@@ -88,7 +89,8 @@ class FirstQuestion extends Component {
       fontSize: '18px',
       userSelect: 'none',
 	  fontStyle: 'italics',
-	  margin: 5,
+	  margin: '5px',
+	  marginBottom: '30px',
     }
 
     let optionFont = {
@@ -98,37 +100,36 @@ class FirstQuestion extends Component {
       userSelect: 'none',
     }
 	
-	var option1 = this.dispenseOption();
-	var option2 = this.dispenseOption();
-	var option3 = this.dispenseOption();
-	var option4 = this.dispenseOption();
+	
 	
 	// Using sample question for now. CHANGE LATER!
     return (
         <div className="jumbotron" style={jumbotronStyle}>
-          <h1 style={questionFont}>Choose the fruits you think are cool!</h1>
-		  <h1 style={questionFontSmall}>You can pick more than one</h1>
+          <h1 style={questionFont}>First tell us a little about yourself</h1>
+		  <h1 style={questionFontSmall}>What are some things here that interests you?</h1>
 		  <br/>
           <div className="row">
             <div className="col-md-6">
               <label>
-                <input value={option1} onClick={this.addToList} type="checkbox"/><span style={optionFont}>{option1}</span>
+                <input value={this.option1} onClick={this.addToList} type="checkbox"/><span style={optionFont}>{this.option1}</span>
               </label><br/>
               <label>
-                <input value={option2} onClick={this.addToList} type="checkbox"/><span style={optionFont}>{option2}</span>
+                <input value={this.option2} onClick={this.addToList} type="checkbox"/><span style={optionFont}>{this.option2}</span>
               </label><br/>
             </div>
             <div className="col-md-6">
               <label>
-                <input value={option3} onClick={this.addToList} type="checkbox"/><span style={optionFont}>{option3}</span>
+                <input value={this.option3} onClick={this.addToList} type="checkbox"/><span style={optionFont}>{this.option3}</span>
               </label><br/>
               <label>
-                <input value={option4} onClick={this.addToList} type="checkbox"/><span style={optionFont}>{option4}</span>
+                <input value={this.option4} onClick={this.addToList} type="checkbox"/><span style={optionFont}>{this.option4}</span>
               </label><br/>
             </div>
           </div>
+		  <div style={{marginTop: '30px'}}>
           <button className="btn btn-primary" onClick={this.change}
-            style={{marginTop: '20px'}}>Next</button>
+            style={{margin: '5px'}}>Next</button>
+		  </div>
         </div>
     )
   }

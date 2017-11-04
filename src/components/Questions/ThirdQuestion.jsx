@@ -10,14 +10,14 @@ class ThirdQuestion extends Component {
 	this.sourceList = [];
 
 	// Create the dispenser options
-	this.options = ['Circle', 'Triangle', 'Square', 'Pentagon', 'Hexagon', 'Octagon'];
+	this.options = ['Apples', 'Bananas', 'Mangoes', 'Oranges', 'Strawberries', 'Watermelons'];
 	this.optionMap = {
-		Circle : 'ign',
-		Triangle : 'the-huffington-post',
-		Square : 'fox-sports',
-		Pentagon : 'independent',
-		Hexagon : 'techradar',
-		Octagon : 'hacker-news',
+		'Apples' : 'the-new-york-times',
+		'Oranges' : 'the-huffington-post',
+		'Mangoes' : 'fox-sports',
+		'Bananas' : 'independent',
+		'Strawberries' : 'hacker-news',
+		'Watermelons' : 'polygon',
 	};
   }
 
@@ -61,14 +61,15 @@ class ThirdQuestion extends Component {
   render() {
 
     let jumbotronStyle = {
-      backgroundColor: 'white',
-      borderRadius: '10px',
-      width: '75%',
+      backgroundColor: '#ff8c8c',
+	  borderRadius: '20px',
+	  border: '2px solid black',
+	  textAlign: 'center',
+      width: '60%',
 	  margin: 'auto',
 	  position: 'absolute',
-	  top : '0',
+	  top : '20%',
 	  left : '0',
-      bottom : '0',
       right : '0',
     }
 
@@ -78,13 +79,14 @@ class ThirdQuestion extends Component {
       userSelect: 'none',
 	  margin: 0,
     }
-
+	
 	let questionFontSmall = {
       fontFamily: 'TimesNewRoman,Times New Roman,Times,Baskerville,Georgia,serif',
       fontSize: '18px',
       userSelect: 'none',
 	  fontStyle: 'italics',
-	  margin: 5,
+	  margin: '5px',
+	  marginBottom: '30px',
     }
 
     let optionFont = {
@@ -102,8 +104,8 @@ class ThirdQuestion extends Component {
 	// Using sample question for now. CHANGE LATER!
     return (
         <div className="jumbotron" style={jumbotronStyle}>
-          <h1 style={questionFont}>Finally choose the stylish shapes!</h1>
-		  <h1 style={questionFontSmall}>You can pick more than one</h1>
+          <h1 style={questionFont}>Finally choose your favourite fruits!</h1>
+		  <h1 style={questionFontSmall}>Or none if you hate fruits</h1>
 		  <br/>
           <div className="row">
             <div className="col-md-6">
@@ -124,7 +126,7 @@ class ThirdQuestion extends Component {
             </div>
           </div>
           <button className="btn btn-primary" onClick={this.change}
-            style={{marginTop: '20px'}}>Next</button>
+            style={{marginTop: '20px'}}>Finish</button>
         </div>
     )
   }
