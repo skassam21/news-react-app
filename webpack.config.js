@@ -27,7 +27,7 @@ var config = {
               loaders: ['style-loader', 'css-loader', 'sass-loader']
           },
           {
-            test: /\.(png|woff|woff2|eot|ttf|svg)$/,
+            test: /\.(jpg|png|woff|woff2|eot|ttf|svg)$/,
             loader: 'url-loader?limit=100000'
           }
         ],
@@ -37,7 +37,8 @@ var config = {
         $: 'jquery',
         jQuery: 'jquery',
         'window.jQuery': 'jquery',
-        Popper: ['popper.js', 'default']})
+        Popper: ['popper.js', 'default']
+      })
     ]
 };
 
