@@ -64,19 +64,16 @@ Here are the list of pages of the application:
 
 For debugging, run:
 
-    ```sh
     npm install
     npm run debug
-    ```
 
 Then you can open the webpage `http://localhost:8080` to see the application. Make any changes to the javascript, and the page will automatically reload.
 
 If you add a package to `package.json` make sure to run:
 
-    ```sh
     npm install
     npm run build
-    ```
+
 
 ### Test
 
