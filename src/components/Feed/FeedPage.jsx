@@ -94,26 +94,6 @@ class SourceView extends Component {
 }
 
 
-class LoadingView extends Component {
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
-    return (
-      <div className="spinner-wrapper">
-            <div className="bubblingG">
-                <span id="bubblingG_1"></span>
-                <span id="bubblingG_2"></span>
-                <span id="bubblingG_3"></span>
-            </div>
-        </div>
-    )
-  }
-}
-
-
-
 class FeedPage extends Component {
   constructor(props) {
     super(props);
@@ -192,10 +172,13 @@ class FeedPage extends Component {
 
   render() {
 
-    let view = null;
+    let onSelect = this.onSelectSource;
+    let selectedSources = this.state.selectedSources;
 
-    if (this.state.articles.length > 0) {
-      view = (<div className="container">
+    return (
+    <div>
+      <NavBar openSettings={this.openSettings} />
+      <div className="container">
           <div className="row" style={{paddingTop: '70px'}}>
               {
                 this.state.articles.map(function(article){
@@ -203,18 +186,7 @@ class FeedPage extends Component {
                 })
               }
         </div>
-      </div>)
-    } else {
-      view = <LoadingView />;
-    }
-
-    let onSelect = this.onSelectSource;
-    let selectedSources = this.state.selectedSources;
-
-    return (
-    <div>
-      <NavBar openSettings={this.openSettings} />
-      {view}
+      </div>
       <div id="settingsModal" className="modal fade" role="dialog">
         <div className="modal-dialog">
           <div className="modal-content">
