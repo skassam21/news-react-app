@@ -43,7 +43,6 @@ class App extends Component {
       sources: newSources,
       questionOptions: this.state.questionOptions
     });
-    console.log(newSources);
   }
 
   render() {

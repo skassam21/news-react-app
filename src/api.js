@@ -1,3 +1,5 @@
+import _ from '../node_modules/underscore/underscore.js';
+
 const BASE_URL = "https://newsapi.org";
 const SOURCE_URL= BASE_URL + "/v1/sources";
 const ARTICLE_URL = BASE_URL + "/v1/articles";
@@ -84,7 +86,8 @@ var Api = {
             articles.push(article);
           }
         }
-        resolve(articles);
+
+        resolve(_.shuffle(articles));
       }).catch(err => {
 	      reject(err);
       });

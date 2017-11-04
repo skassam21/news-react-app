@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import _ from '../../../node_modules/underscore/underscore.js';
 
 class QuestionOption extends Component {
   constructor(props) {
@@ -51,7 +50,7 @@ class QuestionOption extends Component {
 
     let textStyle = {
       position: 'absolute',
-      width: '80%',
+      width: '85%',
       bottom: 0,
       textAlign: 'center',
       color: 'white',
