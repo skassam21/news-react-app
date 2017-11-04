@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import s from './App.scss';
+import background from 'https://i.pinimg.com/736x/29/e8/14/29e8144a9316ea85fc887cc6a2bd40f6--blog-backgrounds-vintage-backgrounds.jpg';
 
 function IntroMessage(props) {
   return (
