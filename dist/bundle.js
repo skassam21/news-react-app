@@ -20551,7 +20551,7 @@ exports.default = Api;
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function($) {
+
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -20690,7 +20690,7 @@ var SourceView = function (_Component2) {
   _createClass(SourceView, [{
     key: 'render',
     value: function render() {
-      console.log(this.props.isActive);
+      console.log(this.props.selectedSources);
       return _react2.default.createElement(
         'div',
         { className: 'checkbox' },
@@ -20744,15 +20744,10 @@ var FeedPage = function (_Component4) {
 
     var _this4 = _possibleConstructorReturn(this, (FeedPage.__proto__ || Object.getPrototypeOf(FeedPage)).call(this, props));
 
-    var selectedSources = props.sources;
-    if (sources.length === 0) {
-      selectedSources = ['bbc-news', 'techcrunch', 'business-insider', 'google-news'];
-    }
-
     _this4.state = {
       articles: [],
       sources: [],
-      selectedSources: selectedSources
+      selectedSources: []
     };
     return _this4;
   }
@@ -20762,19 +20757,24 @@ var FeedPage = function (_Component4) {
     value: function componentDidMount() {
       var _this5 = this;
 
+      var selectedSources = this.props.sources;
+      if (selectedSources.length === 0) {
+        selectedSources = ['bbc-news', 'techcrunch', 'business-insider', 'google-news'];
+      }
       // Get the articles
-      _api2.default.getArticlesFromSources(this.state.selectedSources).then(function (articles) {
+      _api2.default.getArticlesFromSources(selectedSources).then(function (articles) {
         if (articles.length > 0) {
           _this5.setState({
-            articles: articles
+            articles: articles,
+            selectedSources: selectedSources
           });
         } else {
           // Get the default sources
-          var _sources = ['bbc-news', 'techcrunch', 'business-insider', 'google-news'];
-          _api2.default.getArticlesFromSources(_sources).then(function (articles) {
+          var _selectedSources = ['bbc-news', 'techcrunch', 'business-insider', 'google-news'];
+          _api2.default.getArticlesFromSources(sources).then(function (articles) {
             _this5.setState({
               articles: articles,
-              selectedSources: _sources
+              selectedSources: _selectedSources
             });
           });
         }
@@ -20844,7 +20844,7 @@ var FeedPage = function (_Component4) {
                 { className: 'modal-body' },
                 this.state.sources.map(function (source) {
                   return _react2.default.createElement(SourceView, { key: source.id, source: source,
-                    onSelectSource: onSelect, isActive: $.inArray(source.id, this.state.selectedSources) });
+                    onSelectSource: onSelect, selectedSources: this.state.selectedSources });
                 })
               ),
               _react2.default.createElement(
@@ -20867,7 +20867,6 @@ var FeedPage = function (_Component4) {
 }(_react.Component);
 
 exports.default = FeedPage;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(7)))
 
 /***/ }),
 /* 95 */

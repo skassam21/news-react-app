@@ -75,7 +75,7 @@ class SourceView extends Component {
   }
 
   render() {
-    console.log(this.props.isActive);
+    console.log(this.props.selectedSources);
     return (
       <div className="checkbox">
         <label><input type="checkbox" value=""></input>{this.props.source.name}</label>
@@ -109,32 +109,32 @@ class FeedPage extends Component {
   constructor(props) {
     super(props);
 
-    let selectedSources = props.sources;
-    if (sources.length === 0) {
-      selectedSources = ['bbc-news', 'techcrunch', 'business-insider', 'google-news']
-    }
-
     this.state = {
       articles: [],
       sources: [],
-      selectedSources: selectedSources
+      selectedSources: []
     }
   }
 
   componentDidMount() {
+    let selectedSources = this.props.sources;
+    if (selectedSources.length === 0) {
+      selectedSources = ['bbc-news', 'techcrunch', 'business-insider', 'google-news']
+    }
     // Get the articles
-    Api.getArticlesFromSources(this.state.selectedSources).then(articles => {
+    Api.getArticlesFromSources(selectedSources).then(articles => {
       if (articles.length > 0) {
         this.setState({
-            articles: articles
+            articles: articles,
+            selectedSources: selectedSources
         });
       } else {
         // Get the default sources
-        let sources = ['bbc-news', 'techcrunch', 'business-insider', 'google-news']
+        let selectedSources = ['bbc-news', 'techcrunch', 'business-insider', 'google-news']
         Api.getArticlesFromSources(sources).then(articles => {
           this.setState({
               articles: articles,
-              selectedSources: sources
+              selectedSources: selectedSources
           });
         });
       }
@@ -185,7 +185,7 @@ class FeedPage extends Component {
               {
                 this.state.sources.map(function(source) {
                   return <SourceView key={source.id} source={source}
-                    onSelectSource={onSelect} isActive={$.inArray(source.id, this.state.selectedSources)} />;
+                    onSelectSource={onSelect} selectedSources={this.state.selectedSources} />;
                 })
               }
             </div>
