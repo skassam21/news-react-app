@@ -1,24 +1,47 @@
-# Assignment 2: The Front-end
+Welcome to NewsEd!
+===================
 
-In this assignment, you are responsible for building a front-end for your web application. You will build on top of your first assignment, and present the data retrieved from the API(s) you have found.  
+Welcome to our web application **NewsEd** for Assignment 2 for *CSC309*.
 
-The assignment sits here: https://classroom.github.com/g/jZjBSSlY. 
+NewsEd is an application in helping you find personalised news article pertaining to your tastes.
 
-## Specifications:
-Given that every group is using different API(s) and has a different end-product in mind, you are responsible for defining a reasonable scope for your web-application. Here are a few standard guidelines that you are expected to adhere to:
+---
+Who We Are
+-----------
+With the tangle of different news source prevalent in today's media, we feel that it is difficult for one to find the information they want.
 
-- The application should be a one-page responsive, web application with at least three distinct views that a user can navigate through. 
-- Most user interactions will be handled on the front-end and resolved by javascript running in the browser.  While you are allowed to send requests to 3rd-party API servers, you are not allowed to implement functionality in your own server.
-- The submission of this assignment should include most of the (front-end) features you intend on demoing for your final project. (Assignment 3 will mostly focus on building a back-end for your application).
-- The file index.html will be the entry-point for the TAs marking your project. They will open that file from their local machine and expect everything to work.  No server-side code will be tested/launched during the evaluation process.
-- Include a Solutions.md explaining the features of your web application, the end-user and how s/he might use it.
-- You are expected to work in the same teams as Assignment 1, unless a TA contacted you with a change of teams.
-- The deadline for this assignment is Nov 4, 2017. The last commit before 2:00 PM on that date will be used for marking the assignment. If you plan on submitting the assignment late (refer course information for more details), you should include that in your Solutions.md.
+As a group of students, we've decided to build this web application to better help individuals explore and analyse a variety of different news mediums that best interests them.
 
-If you plan on deviating from these guidelines, talk to the prof or a TA and include an Instructions.md explaining your decision.
+With this in mind, there are **three important principles** our application revolves around.
 
-## Additional Notes:
-- You will (probably) be using jQuery/AJAX to talk to your API, display/manipulate your data and make it interactive for a user.  Be mindful that interacting with 3rd party APIs leads to some security concerns which some APIs may not support.  
-- You are not required to use a web framework like AngularJS or a library like React. However, you have the freedom to use what you want to build your user interfaces as long as you abide to the specifications above.  
-- You will be marked on the functionality of your application, its style and usability, its responsiveness, code quality and structure, and how well the application serves your end-user.
+#### <i class="icon-refresh"></i> Specificity
+
+ Everybody has different likes and interests and this is something we value
+ as we want to find you the articles that you most care about in today's world.
+
+#### <i class="icon-pencil"></i> Presentation
+
+Nobody likes a convoluted, ambiguous and hard to read website, so we design our application with the principles in mind that will best fit our user audience.
+
+#### <i class="icon-trash"></i> Reliability
+Fake news is a worrying trend in today's society and we want to make sure 
+that we only pick and relay to you the most reliable and trusted news sources.
+
+---
+How We Work
+-----------
+
+We work by providing you a short interactive survey to complete before you enter the site.
+
+This way, we are able to run our algorithm to best provide you a news feed that best suites your interests and needs.
+
+Once your news feed is generated, you furthermore will also have the option to dynamically change your feed.
+
+
+***With all this said, we really hope you enjoy and find our application useful!***
+
+---
+
+
+
 
