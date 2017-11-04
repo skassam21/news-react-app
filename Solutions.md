@@ -6,6 +6,8 @@
 
 ## Application
 
+Our application was built with webpack and Reactjs. Further information about your application can be found on the readme.md
+
 Here are the list of pages:
 - First page gets to know your tastes and chooses a bunch of new channels to follow
 - Second page shows you the top stories for each news channel - you can sort them, change their order, and filter by channel
