@@ -15,7 +15,7 @@ class NavBar extends Component {
             <a className="navbar-brand">NewsEd</a>
           </div>
           <ul className="nav navbar-nav navbar-right" style={{marginTop: 0}}>
-            <li><a style={{paddingTop: '10px', paddingBottom: 0}}><i className="fa fa-cog" style={{fontSize: '2em'}}></i></a></li>
+            <li><a style={{paddingTop: '10px', paddingBottom: 0}} data-toggle="modal" data-target="#settingsModal"><i className="fa fa-cog" style={{fontSize: '2em'}}></i></a></li>
           </ul>
         </div>
       </nav>

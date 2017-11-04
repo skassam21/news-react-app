@@ -69,6 +69,22 @@ class ArticleView extends Component {
   }
 }
 
+class SourceView extends Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    console.log(this.props.isActive);
+    return (
+      <div className="checkbox">
+        <label><input type="checkbox" value=""></input>{this.props.source.name}</label>
+      </div>
+    )
+  }
+}
+
+
 class LoadingView extends Component {
   constructor(props) {
     super(props);
@@ -92,26 +108,43 @@ class LoadingView extends Component {
 class FeedPage extends Component {
   constructor(props) {
     super(props);
+
+    let selectedSources = props.sources;
+    if (sources.length === 0) {
+      selectedSources = ['bbc-news', 'techcrunch', 'business-insider', 'google-news']
+    }
+
     this.state = {
-      articles: []
+      articles: [],
+      sources: [],
+      selectedSources: selectedSources
     }
   }
 
   componentDidMount() {
-    let sources = this.props.sources.length;
-    if (this.props.sources.length === 0) {
-      sources = ['bbc-news', 'techcrunch', 'business-insider', 'google-news']
-    }
-    Api.getArticlesFromSources(sources).then(articles => {
-      if (articles) {
+    // Get the articles
+    Api.getArticlesFromSources(this.state.selectedSources).then(articles => {
+      if (articles.length > 0) {
         this.setState({
             articles: articles
         });
       } else {
-        this.setState({
-            articles: null
+        // Get the default sources
+        let sources = ['bbc-news', 'techcrunch', 'business-insider', 'google-news']
+        Api.getArticlesFromSources(sources).then(articles => {
+          this.setState({
+              articles: articles,
+              selectedSources: sources
+          });
         });
       }
+    });
+
+    // Get the sources
+    Api.getNewsSources().then(sources => {
+      this.setState({
+        sources
+      });
     });
   }
 
@@ -135,11 +168,35 @@ class FeedPage extends Component {
       view = <LoadingView />;
     }
 
+    let onSelect = this.onSelectSource;
+
     return (
     <div>
-      <NavBar />
+      <NavBar openSettings={this.openSettings} />
       {view}
-    </div>
+      <div id="settingsModal" className="modal fade" role="dialog">
+        <div className="modal-dialog">
+          <div className="modal-content">
+            <div className="modal-header">
+              <button type="button" className="close" data-dismiss="modal">&times;</button>
+              <h4 className="modal-title">Manage your subscriptions</h4>
+            </div>
+            <div className="modal-body">
+              {
+                this.state.sources.map(function(source) {
+                  return <SourceView key={source.id} source={source}
+                    onSelectSource={onSelect} isActive={$.inArray(source.id, this.state.selectedSources)} />;
+                })
+              }
+            </div>
+            <div className="modal-footer">
+              <button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      </div>
     )
   }
 }
