@@ -14,7 +14,7 @@ function IntroMessage(props) {
   )
 }
 
-var style = {
+let style = {
   width: "100%",
   height: "1000px",
   backgroundImage: "url(" + background + ")"
