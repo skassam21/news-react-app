@@ -17,7 +17,7 @@ function IntroMessage(props) {
 var style = {
   width: "100%",
   height: "1000px",
-  backgroundImage: "url(" + { background } + ")"
+  backgroundImage: "url(" + background + ")"
 };
 
 class App extends Component {
