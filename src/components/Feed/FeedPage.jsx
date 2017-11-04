@@ -131,6 +131,7 @@ class FeedPage extends Component {
   _fetchArticles(selectedSources) {
     // Get the articles
     Api.getArticlesFromSources(selectedSources).then(articles => {
+      console.log(articles.length);
       if (articles.length > 0) {
         this.setState({
             articles: articles,

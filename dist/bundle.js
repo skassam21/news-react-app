@@ -20779,6 +20779,7 @@ var FeedPage = function (_Component4) {
 
       // Get the articles
       _api2.default.getArticlesFromSources(selectedSources).then(function (articles) {
+        console.log(articles.length);
         if (articles.length > 0) {
           _this5.setState({
             articles: articles,
