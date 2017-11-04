@@ -20330,6 +20330,26 @@ var App = function (_Component) {
     value: function render() {
       var pageView = null;
 
+      var backgroundStyle = {
+        backgroundImage: 'url(\'dist/img/background.jpg\')',
+        backgroundPosition: 'center center',
+        backgroundRepeat: 'no-repeat',
+        WebkitBackgroundSize: 'cover',
+        MozBackgroundSize: 'cover',
+        OBackgroundSize: 'cover',
+        backgroundSize: 'cover',
+        width: '100%',
+        minHeight: '100vh',
+        backgroundAttachment: 'fixed'
+      };
+
+      var overlayStyle = {
+        background: 'rgba(255, 255, 255, 0.4)',
+        backgroundAttachment: 'fixed',
+        width: '100%',
+        minHeight: '100vh'
+      };
+
       if (this.state.page === 'landingPage') {
         pageView = _react2.default.createElement(_LandingPage2.default, { changePage: this.changePage });
       } else if (this.state.page === 'firstQuestion') {
@@ -20356,8 +20376,12 @@ var App = function (_Component) {
 
       return _react2.default.createElement(
         'div',
-        { className: 'intro-page' },
-        pageView
+        { className: 'intro-page', style: backgroundStyle },
+        _react2.default.createElement(
+          'div',
+          { style: overlayStyle },
+          pageView
+        )
       );
     }
   }]);
@@ -20565,7 +20589,7 @@ var ArticleView = function (_Component) {
         height: '300px',
         width: '95%',
         borderRadius: '10px',
-        margin: '15px auto 0'
+        margin: '10px auto 10px'
       };
 
       var overlayStyle = {
@@ -20652,18 +20676,20 @@ var FeedPage = function (_Component2) {
     _this2.state = {
       articles: []
     };
-    _api2.default.getArticlesFromSources(props.sources).then(function (articles) {
-      console.log(articles);
-      _this2.setState({
-        articles: articles
-      });
-    });
     return _this2;
   }
 
   _createClass(FeedPage, [{
-    key: 'componentWillMount',
-    value: function componentWillMount() {}
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      var _this3 = this;
+
+      _api2.default.getArticlesFromSources(this.props.sources).then(function (articles) {
+        _this3.setState({
+          articles: articles
+        });
+      });
+    }
   }, {
     key: 'render',
     value: function render() {
@@ -20677,7 +20703,7 @@ var FeedPage = function (_Component2) {
           { className: 'container' },
           _react2.default.createElement(
             'div',
-            { className: 'row' },
+            { className: 'row', style: { paddingTop: '50px' } },
             this.state.articles.map(function (article) {
               return _react2.default.createElement(ArticleView, { key: article.title, article: article });
             })
@@ -20762,7 +20788,7 @@ var LandingPage = function (_Component) {
           { className: 'row' },
           _react2.default.createElement(
             'div',
-            { className: 'col-lg-8 col-lg-offset-2' },
+            { className: 'col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-10 col-xs-offset-1' },
             _react2.default.createElement(
               'h1',
               null,
@@ -20825,21 +20851,27 @@ var NavBar = function (_Component) {
   }
 
   _createClass(NavBar, [{
-    key: "render",
+    key: 'render',
     value: function render() {
+      var navBarStyle = {
+        position: 'fixed',
+        zIndex: '100',
+        width: '100%'
+      };
+
       return _react2.default.createElement(
-        "nav",
-        { className: "navbar navbar-inverse" },
+        'nav',
+        { className: 'navbar navbar-inverse', style: navBarStyle },
         _react2.default.createElement(
-          "div",
-          { className: "container-fluid" },
+          'div',
+          { className: 'container-fluid' },
           _react2.default.createElement(
-            "div",
-            { className: "navbar-header" },
+            'div',
+            { className: 'navbar-header' },
             _react2.default.createElement(
-              "a",
-              { className: "navbar-brand" },
-              "NewsEd"
+              'a',
+              { className: 'navbar-brand' },
+              'NewsEd'
             )
           )
         )
@@ -20889,9 +20921,6 @@ var QuestionOption = function (_Component) {
       hover: false
     };
 
-    _this.toggleHover = function () {
-      return _this._toggleHover();
-    };
     _this.onClickImg = function () {
       return _this._onClickImg();
     };
@@ -20899,11 +20928,6 @@ var QuestionOption = function (_Component) {
   }
 
   _createClass(QuestionOption, [{
-    key: '_toggleHover',
-    value: function _toggleHover() {
-      this.setState({ hover: !this.state.hover });
-    }
-  }, {
     key: '_onClickImg',
     value: function _onClickImg() {
       this.props.onClickImg(this.props.options);
@@ -20932,15 +20956,9 @@ var QuestionOption = function (_Component) {
         borderRadius: '10px'
       };
 
-      if (this.props.options.isActive) {
-        overlayStyle.background = 'rgba(10, 24, 41, 0.85)';
-      } else {
-        overlayStyle.background = 'rgba(10, 24, 41, 0.5)';
-      }
-
       var textStyle = {
         position: 'absolute',
-        width: '85%',
+        width: '90%',
         bottom: 0,
         textAlign: 'center',
         color: 'white',
@@ -20950,10 +20968,17 @@ var QuestionOption = function (_Component) {
         right: '0'
       };
 
-      if (this.state.hover) {
-        textStyle.color = 'rgba(255, 255, 255, 0.7)';
-      } else {
-        textStyle.color = 'white';
+      var checkIconStyle = {
+        position: 'absolute',
+        top: 5,
+        right: 5,
+        fontSize: '1.5em'
+      };
+
+      var imgClassName = 'img-option';
+      var checkClassName = "glyphicon";
+      if (this.props.options.isActive) {
+        imgClassName += ' active';
       }
 
       return _react2.default.createElement(
@@ -20961,13 +20986,23 @@ var QuestionOption = function (_Component) {
         { className: 'col-md-4' },
         _react2.default.createElement(
           'div',
-          { style: imgStyle, onClick: this.onClickImg, onMouseEnter: this.toggleHover, onMouseLeave: this.toggleHover },
+          { style: imgStyle, onClick: this.onClickImg, className: imgClassName },
           _react2.default.createElement(
             'div',
-            { style: overlayStyle },
+            { className: 'overlay', style: overlayStyle },
             _react2.default.createElement(
               'p',
-              { style: textStyle },
+              { className: 'checkIcon', style: checkIconStyle },
+              _react2.default.createElement('span', { className: 'glyphicon glyphicon-check' })
+            ),
+            _react2.default.createElement(
+              'p',
+              { className: 'uncheckIcon', style: checkIconStyle },
+              _react2.default.createElement('span', { className: 'glyphicon glyphicon-unchecked' })
+            ),
+            _react2.default.createElement(
+              'h5',
+              { className: 'option-text', style: textStyle },
               this.props.options.question
             )
           )
@@ -21207,7 +21242,7 @@ var QUESTIONS = [{
   }, {
     'id': 17,
     'question': 'Tech Nerd',
-    'source': 'hacker-news',
+    'source': 'recode',
     'img': 'dist/img/hacking.png',
     'isActive': false
   }, {
@@ -23700,7 +23735,7 @@ exports = module.exports = __webpack_require__(54)(undefined);
 exports.i(__webpack_require__(112), "");
 
 // module
-exports.push([module.i, "/*\n * Colors\n * ========================================================================== */\n/*\n * Typography\n * ========================================================================== */\n/*\n * Base styles\n * ========================================================================== */\nh1, h2, h3, h4, h5, h6, button {\n  font-family: \"Raleway\", sans-serif; }\n\nh1 {\n  font-size: 48px; }\n\np {\n  font-family: \"Open Sans\", \"Raleway\", sans-serif;\n  font-size: 16px; }\n\nbody {\n  background: #ECFFFF; }\n\nbutton.btn-primary {\n  background: none;\n  border: 0;\n  border-bottom: 2px solid #0A1829;\n  font-family: 100;\n  color: #0A1829;\n  text-transform: uppercase; }\n\nbutton.btn-primary:hover, button.btn-primary:active, button.btn-primary:focus {\n  color: white;\n  background: #0A1829; }\n\n.navbar-inverse.navbar {\n  background: #0A1829;\n  border-color: #0A1829;\n  color: white; }\n  .navbar-inverse.navbar .navbar-brand {\n    color: white; }\n", ""]);
+exports.push([module.i, "/*\n * Colors\n * ========================================================================== */\n/*\n * Typography\n * ========================================================================== */\n/*\n * Base styles\n * ========================================================================== */\nh1, h2, h3, h4, h5, h6, button {\n  font-family: \"Raleway\", sans-serif; }\n\nh1 {\n  font-size: 48px; }\n\np {\n  font-family: \"Open Sans\", \"Raleway\", sans-serif;\n  font-size: 16px; }\n\nbutton.btn-primary {\n  background: none;\n  border: 0;\n  border-bottom: 2px solid #0A1829;\n  font-family: 100;\n  color: #0A1829;\n  text-transform: uppercase; }\n\nbutton.btn-primary:hover, button.btn-primary:active, button.btn-primary:focus {\n  color: white;\n  background: #0A1829; }\n\n.navbar-inverse.navbar {\n  background: #0A1829;\n  border: 0;\n  color: white; }\n  .navbar-inverse.navbar .navbar-brand {\n    color: white;\n    font-family: \"Raleway\", sans-serif;\n    font-size: 20px; }\n\n.img-option .overlay {\n  background: rgba(10, 24, 41, 0.3);\n  position: relative; }\n  .img-option .overlay .uncheckIcon {\n    color: rgba(255, 255, 255, 0.2); }\n  .img-option .overlay .checkIcon {\n    color: transparent; }\n\n.img-option.active .overlay {\n  background: rgba(10, 24, 41, 0.95); }\n  .img-option.active .overlay .uncheckIcon {\n    color: transparent; }\n  .img-option.active .overlay .checkIcon {\n    color: white; }\n\n.img-option .overlay:hover .uncheckIcon {\n  color: transparent; }\n\n.img-option .overlay:hover .checkIcon {\n  color: white; }\n", ""]);
 
 // exports
 

@@ -25,6 +25,16 @@ button.btn-primary {
   font-family: 100;
   color: $dark-blue;
   text-transform: uppercase;
+  border-radius: 2px;
+}
+
+button.btn-primary:hover {
+  border-radius: 3px;
+}
+
+
+button.btn-back.btn-primary:hover {
+  background: black;
 }
 
 button.btn-primary:hover, button.btn-primary:active, button.btn-primary:focus {
@@ -45,22 +55,28 @@ button.btn-primary:hover, button.btn-primary:active, button.btn-primary:focus {
 
 .img-option {
   .overlay {
-    background: rgba(10, 24, 41, 0.3);
+    background: rgba(255, 255, 255, 0.5);
+    border: 1px solid rgba(0, 0, 0, 0.2);
     position: relative;
 
     .uncheckIcon {
-      color: rgba(255, 255, 255, 0.2);
+      color: rgba(0, 0, 0, 0.2);
     }
 
     .checkIcon {
       color: transparent;
+    }
+
+    .option-text {
+      color: black;
+      font-weight: 800;
     }
   }
 }
 
 .img-option.active {
   .overlay {
-    background: rgba(10, 24, 41, 0.95);
+    background: rgba(10, 24, 41, 0.7);
 
     .uncheckIcon {
       color: transparent;
@@ -69,6 +85,20 @@ button.btn-primary:hover, button.btn-primary:active, button.btn-primary:focus {
     .checkIcon {
       color: white;
     }
+
+    .option-text {
+      color: white;
+    }
+  }
+}
+
+.img-option.active .overlay:hover {
+  .checkIcon {
+    color: white;
+  }
+
+  .uncheckIcon {
+    color: transparent;
   }
 }
 
@@ -79,6 +109,6 @@ button.btn-primary:hover, button.btn-primary:active, button.btn-primary:focus {
   }
 
   .checkIcon {
-    color: white;
+    color: rgba(0, 0, 0, 0.6);
   }
 }

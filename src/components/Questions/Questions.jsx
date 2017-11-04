@@ -1,6 +1,6 @@
 const QUESTIONS = [{
-  'question': 'Select the headlines you\'d be most interested in',
-  'titleQuestion': 'First tell us a little about yourself',
+  'titleQuestion': 'What headlines would you be most interested in?',
+  'question': 'Select all that apply',
   'options': [{
     'id': 1,
     'question': 'Did both Clinton and Trump collude with Russia?',
@@ -27,13 +27,13 @@ const QUESTIONS = [{
     'isActive': false
   }, {
     'id': 5,
-    'question': 'TransferWise announces whopping $280M investment as early shareholders cash in',
+    'question': 'TransferWise raises $280M investment',
     'source': 'techcrunch',
     'img': 'dist/img/taavet-kristo.jpg',
     'isActive': false
   }, {
     'id': 6,
-    'question': 'The enormous Republican tax plan would die in the Senate because of a key rule',
+    'question': 'The enormous Republican tax plan would die in the Senate',
     'source': 'business-insider',
     'img': 'dist/img/trump-ryan.jpg',
     'isActive': false
@@ -41,7 +41,7 @@ const QUESTIONS = [{
 ]},
 {
   'titleQuestion': 'What are some things you wish you had?',
-  'question': 'Pick as many as you like!',
+  'question': 'Select all that apply',
   'options': [
     {
       'id': 7,
@@ -114,9 +114,9 @@ const QUESTIONS = [{
     },
     {
       'id': 16,
-      'question': 'Unlimited Knowledge',
+      'question': 'Knowing All',
       'source': 'the-telegraph',
-      'img': 'dist/img/truth.jpg',
+      'img': 'dist/img/knowledge.jpg',
       'isActive': false
     },
     {

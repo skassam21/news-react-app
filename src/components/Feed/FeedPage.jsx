@@ -3,7 +3,6 @@ import NavBar from '../NavBar/NavBar';
 import Api from './../../api';
 
 
-// Props now contains one individual article
 class ArticleView extends Component {
   constructor(props) {
     super(props);
@@ -39,7 +38,7 @@ class ArticleView extends Component {
     let textWrapperStyle = {
       position: 'absolute',
       width: '85%',
-      bottom: 0,
+      bottom: '10px',
       textAlign: 'left',
       color: 'white',
       marginLeft: 'auto',
@@ -70,6 +69,13 @@ class ArticleView extends Component {
   }
 }
 
+class LoadingView extends Component {
+  constructor(props) {
+    super(props);
+  }
+
+}
+
 
 
 class FeedPage extends Component {
@@ -92,18 +98,26 @@ class FeedPage extends Component {
 
   render() {
 
-    return (
-    <div>
-      <NavBar />
-      <div className="container">
-          <div className="row" style={{paddingTop: '50px'}}>
+    let view = null;
+
+    if (this.state.articles) {
+      view = (<div className="container">
+          <div className="row" style={{paddingTop: '70px'}}>
               {
                 this.state.articles.map(function(article){
                   return <ArticleView key={article.title} article={article} />;
                 })
               }
         </div>
-      </div>
+      </div>)
+    } else {
+      view = <LoadingView />;
+    }
+
+    return (
+    <div>
+      <NavBar />
+      {view}
     </div>
     )
   }

@@ -17,6 +17,11 @@ class App extends Component {
 
     this.editSources = (selectedOption) => this._editSources(selectedOption);
     this.changePage = (newPage) => this._changePage(newPage);
+    this.onBackButtonEvent = (e) => this._onBackButtonEvent(e);
+  }
+
+  componentDidMount() {
+    window.onbeforeunload = function() { return "Are you sure you'd like to leave?"; };
   }
 
   _changePage(newPage) {
@@ -68,23 +73,27 @@ class App extends Component {
       minHeight: '100vh'
     }
 
+    if (this.state.page === 'feed') {
+      overlayStyle.background = 'rgba(255, 255, 255, 0.8)';
+    }
+
     if (this.state.page === 'landingPage') {
       pageView = <LandingPage changePage={this.changePage} />;
     } else if (this.state.page === 'firstQuestion') {
       pageView = <Question changePage={this.changePage} nextPage={'secondQuestion'}
-        editSources={this.editSources}
+        editSources={this.editSources} prevPage={'landingPage'}
         question={this.state.questionOptions[0].question}
         titleQuestion={this.state.questionOptions[0].titleQuestion}
         options={this.state.questionOptions[0].options}/>;
     } else if (this.state.page === 'secondQuestion') {
       pageView = <Question changePage={this.changePage} nextPage={'thirdQuestion'}
-        editSources={this.editSources}
+        editSources={this.editSources} prevPage={'firstQuestion'}
         question={this.state.questionOptions[1].question}
         titleQuestion={this.state.questionOptions[1].titleQuestion}
         options={this.state.questionOptions[1].options}/>;
     } else if (this.state.page === 'thirdQuestion') {
       pageView = <Question changePage={this.changePage} nextPage={'feed'}
-        editSources={this.editSources}
+        editSources={this.editSources} prevPage={'secondQuestion'}
         question={this.state.questionOptions[2].question}
         titleQuestion={this.state.questionOptions[2].titleQuestion}
         options={this.state.questionOptions[2].options}/>;

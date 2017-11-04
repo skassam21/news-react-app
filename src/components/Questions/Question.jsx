@@ -41,7 +41,6 @@ class QuestionOption extends Component {
       width: '90%',
       bottom: 0,
       textAlign: 'center',
-      color: 'white',
       marginLeft: 'auto',
       marginRight: 'auto',
       left: '0',
@@ -67,7 +66,7 @@ class QuestionOption extends Component {
           <div className="overlay" style={overlayStyle}>
             <p className="checkIcon" style={checkIconStyle}><span className='glyphicon glyphicon-check'></span></p>
             <p className="uncheckIcon" style={checkIconStyle}><span className='glyphicon glyphicon-unchecked'></span></p>
-            <h5 className="option-text" style={textStyle}>{this.props.options.question}</h5>
+            <h4 className="option-text" style={textStyle}>{this.props.options.question}</h4>
           </div>
         </div>
       </div>
@@ -79,11 +78,8 @@ class Question extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      activeIds: []
-    }
-
     this.nextQuestion = () => this._nextQuestion();
+    this.prevQuestion = () => this._prevQuestion();
     this.onClickOption = (selectedOption) => this._onClickOption(selectedOption);
 
   }
@@ -92,16 +88,11 @@ class Question extends Component {
     this.props.editSources(selectedOption);
   }
 
-  /*
-  Call this function to change pages and submit list
-  */
-  _nextQuestion() {
-    // If they are none, show an error
+  _prevQuestion() {
+    this.props.changePage(this.props.prevPage);
+  }
 
-    // Reset state of question
-    this.setState({
-      activeIds: []
-    });
+  _nextQuestion() {
     this.props.changePage(this.props.nextPage);
   }
 
@@ -135,8 +126,8 @@ class Question extends Component {
           </div>
           <div className="row">
             <div style={{marginTop: '30px'}}>
-                <button className="btn btn-primary" onClick={this.nextQuestion}
-                  style={{margin: '5px'}}>Next</button>
+              <button className="btn btn-primary" style={{margin: '5px'}} onClick={this.prevQuestion}>Back</button>
+                <button className="btn btn-primary" style={{margin: '5px'}} onClick={this.nextQuestion}>Next</button>
             </div>
           </div>
         </div>
