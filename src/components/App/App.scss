@@ -18,10 +18,6 @@ p {
   font-size: 16px;
 }
 
-body {
-  background: $light-blue3;
-}
-
 button.btn-primary {
   background: none;
   border: 0;
@@ -38,9 +34,51 @@ button.btn-primary:hover, button.btn-primary:active, button.btn-primary:focus {
 
 .navbar-inverse.navbar {
   background: $dark-blue;
-  border-color: $dark-blue;
+  border: 0;
   color: white;
   .navbar-brand {
+    color: white;
+    font-family: $font-family-headings;
+    font-size: 20px;
+  }
+}
+
+.img-option {
+  .overlay {
+    background: rgba(10, 24, 41, 0.3);
+    position: relative;
+
+    .uncheckIcon {
+      color: rgba(255, 255, 255, 0.2);
+    }
+
+    .checkIcon {
+      color: transparent;
+    }
+  }
+}
+
+.img-option.active {
+  .overlay {
+    background: rgba(10, 24, 41, 0.95);
+
+    .uncheckIcon {
+      color: transparent;
+    }
+
+    .checkIcon {
+      color: white;
+    }
+  }
+}
+
+
+.img-option .overlay:hover {
+  .uncheckIcon {
+    color: transparent;
+  }
+
+  .checkIcon {
     color: white;
   }
 }

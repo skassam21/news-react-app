@@ -122,7 +122,7 @@ const QUESTIONS = [{
     {
       'id': 17,
       'question': 'Tech Nerd',
-      'source': 'hacker-news',
+      'source': 'recode',
       'img': 'dist/img/hacking.png',
       'isActive': false
     },

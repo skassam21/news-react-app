@@ -7,8 +7,14 @@ class NavBar extends Component {
 
 
   render() {
+    let navBarStyle = {
+      position: 'fixed',
+      zIndex: '100',
+      width: '100%'
+    }
+
     return (
-      <nav className="navbar navbar-inverse">
+      <nav className="navbar navbar-inverse" style={navBarStyle}>
         <div className="container-fluid">
           <div className="navbar-header">
             <a className="navbar-brand">NewsEd</a>

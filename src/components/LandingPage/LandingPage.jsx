@@ -31,7 +31,7 @@ class LandingPage extends Component {
     return (
       <div className="container" style={containerStyle}>
         <div className="row">
-          <div className="col-lg-8 col-lg-offset-2">
+          <div className="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-10 col-xs-offset-1">
               <h1>Welcome to NewsEd!</h1>
         		  <p>NewsEd helps you find news articles that are personalized to you! Fill out our quick survey to get access to a list
               of articles that fit your tastes and needs.</p>

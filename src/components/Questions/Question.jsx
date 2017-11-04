@@ -7,18 +7,12 @@ class QuestionOption extends Component {
       hover: false
     }
 
-    this.toggleHover = () => this._toggleHover();
     this.onClickImg = () => this._onClickImg();
-  }
-
-  _toggleHover() {
-    this.setState({hover: !this.state.hover});
   }
 
   _onClickImg() {
     this.props.onClickImg(this.props.options);
   }
-
 
   render() {
     let imgStyle = {
@@ -42,15 +36,9 @@ class QuestionOption extends Component {
       borderRadius: '10px'
     }
 
-    if (this.props.options.isActive) {
-      overlayStyle.background = 'rgba(10, 24, 41, 0.85)';
-    } else {
-      overlayStyle.background = 'rgba(10, 24, 41, 0.5)';
-    }
-
     let textStyle = {
       position: 'absolute',
-      width: '85%',
+      width: '90%',
       bottom: 0,
       textAlign: 'center',
       color: 'white',
@@ -60,17 +48,26 @@ class QuestionOption extends Component {
       right: '0'
     }
 
-    if (this.state.hover) {
-      textStyle.color = 'rgba(255, 255, 255, 0.7)';
-    } else {
-      textStyle.color = 'white';
+    let checkIconStyle = {
+      position: 'absolute',
+      top: 5,
+      right: 5,
+      fontSize: '1.5em'
+    }
+
+    let imgClassName = 'img-option';
+    let checkClassName = "glyphicon";
+    if (this.props.options.isActive) {
+      imgClassName += ' active';
     }
 
     return (
       <div className="col-md-4">
-        <div style={imgStyle} onClick={this.onClickImg} onMouseEnter={this.toggleHover} onMouseLeave={this.toggleHover}>
-          <div style={overlayStyle}>
-            <p style={textStyle}>{this.props.options.question}</p>
+        <div style={imgStyle} onClick={this.onClickImg} className={imgClassName}>
+          <div className="overlay" style={overlayStyle}>
+            <p className="checkIcon" style={checkIconStyle}><span className='glyphicon glyphicon-check'></span></p>
+            <p className="uncheckIcon" style={checkIconStyle}><span className='glyphicon glyphicon-unchecked'></span></p>
+            <h5 className="option-text" style={textStyle}>{this.props.options.question}</h5>
           </div>
         </div>
       </div>

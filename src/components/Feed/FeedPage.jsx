@@ -21,7 +21,7 @@ class ArticleView extends Component {
       height: '300px',
       width: '95%',
       borderRadius: '10px',
-      margin: '15px auto 0'
+      margin: '10px auto 10px'
     }
 
     let overlayStyle = {
@@ -78,15 +78,14 @@ class FeedPage extends Component {
     this.state = {
       articles: []
     }
-    Api.getArticlesFromSources(props.sources).then(articles => {
-      console.log(articles);
+  }
+
+  componentDidMount() {
+    Api.getArticlesFromSources(this.props.sources).then(articles => {
       this.setState({
           articles: articles
       });
     });
-  }
-
-  componentWillMount() {
   }
 
 
@@ -97,7 +96,7 @@ class FeedPage extends Component {
     <div>
       <NavBar />
       <div className="container">
-          <div className="row">
+          <div className="row" style={{paddingTop: '50px'}}>
               {
                 this.state.articles.map(function(article){
                   return <ArticleView key={article.title} article={article} />;

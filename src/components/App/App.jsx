@@ -48,6 +48,26 @@ class App extends Component {
   render() {
     let pageView = null;
 
+    let backgroundStyle = {
+      backgroundImage: 'url(\'dist/img/background.jpg\')',
+      backgroundPosition: 'center center',
+      backgroundRepeat: 'no-repeat',
+      WebkitBackgroundSize: 'cover',
+      MozBackgroundSize: 'cover',
+      OBackgroundSize: 'cover',
+      backgroundSize: 'cover',
+      width: '100%',
+      minHeight: '100vh',
+      backgroundAttachment: 'fixed'
+    }
+
+    let overlayStyle = {
+      background: 'rgba(255, 255, 255, 0.4)',
+      backgroundAttachment: 'fixed',
+      width: '100%',
+      minHeight: '100vh'
+    }
+
     if (this.state.page === 'landingPage') {
       pageView = <LandingPage changePage={this.changePage} />;
     } else if (this.state.page === 'firstQuestion') {
@@ -73,8 +93,10 @@ class App extends Component {
     }
 
     return (
-      <div className="intro-page">
-        {pageView}
+      <div className="intro-page" style={backgroundStyle}>
+        <div style={overlayStyle}>
+          {pageView}
+        </div>
       </div>
     )
   }
