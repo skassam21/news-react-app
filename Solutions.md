@@ -11,11 +11,6 @@ Here are the list of pages:
 - Second page shows you the top stories for each news channel - you can sort them, change their order, and filter by channel
 - Third page is a settings page that lets you change the channels that you are subscribed to
 
-## TODO list
-
-- Explain the features of your web application, the end-user and how s/he might use it.
-- A note if you plan on submitting the assignment late.
-
 ## Debugging and Testing
 
 For debugging, run:
