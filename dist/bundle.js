@@ -20294,10 +20294,20 @@ var App = function (_Component) {
     _this.changePage = function (newPage) {
       return _this._changePage(newPage);
     };
+    _this.onBackButtonEvent = function (e) {
+      return _this._onBackButtonEvent(e);
+    };
     return _this;
   }
 
   _createClass(App, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      window.onbeforeunload = function () {
+        return "Are you sure you'd like to leave?";
+      };
+    }
+  }, {
     key: '_changePage',
     value: function _changePage(newPage) {
       this.setState({
@@ -20350,23 +20360,27 @@ var App = function (_Component) {
         minHeight: '100vh'
       };
 
+      if (this.state.page === 'feed') {
+        overlayStyle.background = 'rgba(255, 255, 255, 0.8)';
+      }
+
       if (this.state.page === 'landingPage') {
         pageView = _react2.default.createElement(_LandingPage2.default, { changePage: this.changePage });
       } else if (this.state.page === 'firstQuestion') {
         pageView = _react2.default.createElement(_Question2.default, { changePage: this.changePage, nextPage: 'secondQuestion',
-          editSources: this.editSources,
+          editSources: this.editSources, prevPage: 'landingPage',
           question: this.state.questionOptions[0].question,
           titleQuestion: this.state.questionOptions[0].titleQuestion,
           options: this.state.questionOptions[0].options });
       } else if (this.state.page === 'secondQuestion') {
         pageView = _react2.default.createElement(_Question2.default, { changePage: this.changePage, nextPage: 'thirdQuestion',
-          editSources: this.editSources,
+          editSources: this.editSources, prevPage: 'firstQuestion',
           question: this.state.questionOptions[1].question,
           titleQuestion: this.state.questionOptions[1].titleQuestion,
           options: this.state.questionOptions[1].options });
       } else if (this.state.page === 'thirdQuestion') {
         pageView = _react2.default.createElement(_Question2.default, { changePage: this.changePage, nextPage: 'feed',
-          editSources: this.editSources,
+          editSources: this.editSources, prevPage: 'secondQuestion',
           question: this.state.questionOptions[2].question,
           titleQuestion: this.state.questionOptions[2].titleQuestion,
           options: this.state.questionOptions[2].options });
@@ -20565,7 +20579,6 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-// Props now contains one individual article
 var ArticleView = function (_Component) {
   _inherits(ArticleView, _Component);
 
@@ -20607,7 +20620,7 @@ var ArticleView = function (_Component) {
       var textWrapperStyle = {
         position: 'absolute',
         width: '85%',
-        bottom: 0,
+        bottom: '10px',
         textAlign: 'left',
         color: 'white',
         marginLeft: 'auto',
@@ -20665,50 +20678,93 @@ var ArticleView = function (_Component) {
   return ArticleView;
 }(_react.Component);
 
-var FeedPage = function (_Component2) {
-  _inherits(FeedPage, _Component2);
+var LoadingView = function (_Component2) {
+  _inherits(LoadingView, _Component2);
+
+  function LoadingView(props) {
+    _classCallCheck(this, LoadingView);
+
+    return _possibleConstructorReturn(this, (LoadingView.__proto__ || Object.getPrototypeOf(LoadingView)).call(this, props));
+  }
+
+  _createClass(LoadingView, [{
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'div',
+        { className: 'spinner-wrapper' },
+        _react2.default.createElement(
+          'div',
+          { className: 'bubblingG' },
+          _react2.default.createElement('span', { id: 'bubblingG_1' }),
+          _react2.default.createElement('span', { id: 'bubblingG_2' }),
+          _react2.default.createElement('span', { id: 'bubblingG_3' })
+        )
+      );
+    }
+  }]);
+
+  return LoadingView;
+}(_react.Component);
+
+var FeedPage = function (_Component3) {
+  _inherits(FeedPage, _Component3);
 
   function FeedPage(props) {
     _classCallCheck(this, FeedPage);
 
-    var _this2 = _possibleConstructorReturn(this, (FeedPage.__proto__ || Object.getPrototypeOf(FeedPage)).call(this, props));
+    var _this3 = _possibleConstructorReturn(this, (FeedPage.__proto__ || Object.getPrototypeOf(FeedPage)).call(this, props));
 
-    _this2.state = {
+    _this3.state = {
       articles: []
     };
-    return _this2;
+    return _this3;
   }
 
   _createClass(FeedPage, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
-      var _this3 = this;
+      var _this4 = this;
 
       _api2.default.getArticlesFromSources(this.props.sources).then(function (articles) {
-        _this3.setState({
-          articles: articles
-        });
+        if (articles) {
+          _this4.setState({
+            articles: articles
+          });
+        } else {
+          _this4.setState({
+            articles: null
+          });
+        }
       });
     }
   }, {
     key: 'render',
     value: function render() {
 
-      return _react2.default.createElement(
-        'div',
-        null,
-        _react2.default.createElement(_NavBar2.default, null),
-        _react2.default.createElement(
+      var view = null;
+
+      if (this.state.articles.length > 0) {
+        view = _react2.default.createElement(
           'div',
           { className: 'container' },
           _react2.default.createElement(
             'div',
-            { className: 'row', style: { paddingTop: '50px' } },
+            { className: 'row', style: { paddingTop: '70px' } },
             this.state.articles.map(function (article) {
               return _react2.default.createElement(ArticleView, { key: article.title, article: article });
             })
           )
-        )
+        );
+      } else {
+        view = _react2.default.createElement(LoadingView, null);
+      }
+
+      return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(_NavBar2.default, null),
+        view
       );
     }
   }]);
@@ -20961,7 +21017,6 @@ var QuestionOption = function (_Component) {
         width: '90%',
         bottom: 0,
         textAlign: 'center',
-        color: 'white',
         marginLeft: 'auto',
         marginRight: 'auto',
         left: '0',
@@ -21001,7 +21056,7 @@ var QuestionOption = function (_Component) {
               _react2.default.createElement('span', { className: 'glyphicon glyphicon-unchecked' })
             ),
             _react2.default.createElement(
-              'h5',
+              'h4',
               { className: 'option-text', style: textStyle },
               this.props.options.question
             )
@@ -21022,12 +21077,11 @@ var Question = function (_Component2) {
 
     var _this2 = _possibleConstructorReturn(this, (Question.__proto__ || Object.getPrototypeOf(Question)).call(this, props));
 
-    _this2.state = {
-      activeIds: []
-    };
-
     _this2.nextQuestion = function () {
       return _this2._nextQuestion();
+    };
+    _this2.prevQuestion = function () {
+      return _this2._prevQuestion();
     };
     _this2.onClickOption = function (selectedOption) {
       return _this2._onClickOption(selectedOption);
@@ -21041,20 +21095,14 @@ var Question = function (_Component2) {
     value: function _onClickOption(selectedOption) {
       this.props.editSources(selectedOption);
     }
-
-    /*
-    Call this function to change pages and submit list
-    */
-
+  }, {
+    key: '_prevQuestion',
+    value: function _prevQuestion() {
+      this.props.changePage(this.props.prevPage);
+    }
   }, {
     key: '_nextQuestion',
     value: function _nextQuestion() {
-      // If they are none, show an error
-
-      // Reset state of question
-      this.setState({
-        activeIds: []
-      });
       this.props.changePage(this.props.nextPage);
     }
   }, {
@@ -21108,8 +21156,12 @@ var Question = function (_Component2) {
             { style: { marginTop: '30px' } },
             _react2.default.createElement(
               'button',
-              { className: 'btn btn-primary', onClick: this.nextQuestion,
-                style: { margin: '5px' } },
+              { className: 'btn btn-primary', style: { margin: '5px' }, onClick: this.prevQuestion },
+              'Back'
+            ),
+            _react2.default.createElement(
+              'button',
+              { className: 'btn btn-primary', style: { margin: '5px' }, onClick: this.nextQuestion },
               'Next'
             )
           )
@@ -21134,8 +21186,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 var QUESTIONS = [{
-  'question': 'Select the headlines you\'d be most interested in',
-  'titleQuestion': 'First tell us a little about yourself',
+  'titleQuestion': 'What headlines would you be most interested in?',
+  'question': 'Select all that apply',
   'options': [{
     'id': 1,
     'question': 'Did both Clinton and Trump collude with Russia?',
@@ -21162,19 +21214,19 @@ var QUESTIONS = [{
     'isActive': false
   }, {
     'id': 5,
-    'question': 'TransferWise announces whopping $280M investment as early shareholders cash in',
+    'question': 'TransferWise raises $280M investment',
     'source': 'techcrunch',
     'img': 'dist/img/taavet-kristo.jpg',
     'isActive': false
   }, {
     'id': 6,
-    'question': 'The enormous Republican tax plan would die in the Senate because of a key rule',
+    'question': 'The enormous Republican tax plan would die in the Senate',
     'source': 'business-insider',
     'img': 'dist/img/trump-ryan.jpg',
     'isActive': false
   }] }, {
   'titleQuestion': 'What are some things you wish you had?',
-  'question': 'Pick as many as you like!',
+  'question': 'Select all that apply',
   'options': [{
     'id': 7,
     'question': 'Next Lottery Numbers',
@@ -21235,9 +21287,9 @@ var QUESTIONS = [{
     'isActive': false
   }, {
     'id': 16,
-    'question': 'Unlimited Knowledge',
+    'question': 'Knowing All',
     'source': 'the-telegraph',
-    'img': 'dist/img/truth.jpg',
+    'img': 'dist/img/knowledge.jpg',
     'isActive': false
   }, {
     'id': 17,
@@ -23735,7 +23787,7 @@ exports = module.exports = __webpack_require__(54)(undefined);
 exports.i(__webpack_require__(112), "");
 
 // module
-exports.push([module.i, "/*\n * Colors\n * ========================================================================== */\n/*\n * Typography\n * ========================================================================== */\n/*\n * Base styles\n * ========================================================================== */\nh1, h2, h3, h4, h5, h6, button {\n  font-family: \"Raleway\", sans-serif; }\n\nh1 {\n  font-size: 48px; }\n\np {\n  font-family: \"Open Sans\", \"Raleway\", sans-serif;\n  font-size: 16px; }\n\nbutton.btn-primary {\n  background: none;\n  border: 0;\n  border-bottom: 2px solid #0A1829;\n  font-family: 100;\n  color: #0A1829;\n  text-transform: uppercase; }\n\nbutton.btn-primary:hover, button.btn-primary:active, button.btn-primary:focus {\n  color: white;\n  background: #0A1829; }\n\n.navbar-inverse.navbar {\n  background: #0A1829;\n  border: 0;\n  color: white; }\n  .navbar-inverse.navbar .navbar-brand {\n    color: white;\n    font-family: \"Raleway\", sans-serif;\n    font-size: 20px; }\n\n.img-option .overlay {\n  background: rgba(10, 24, 41, 0.3);\n  position: relative; }\n  .img-option .overlay .uncheckIcon {\n    color: rgba(255, 255, 255, 0.2); }\n  .img-option .overlay .checkIcon {\n    color: transparent; }\n\n.img-option.active .overlay {\n  background: rgba(10, 24, 41, 0.95); }\n  .img-option.active .overlay .uncheckIcon {\n    color: transparent; }\n  .img-option.active .overlay .checkIcon {\n    color: white; }\n\n.img-option .overlay:hover .uncheckIcon {\n  color: transparent; }\n\n.img-option .overlay:hover .checkIcon {\n  color: white; }\n", ""]);
+exports.push([module.i, "/*\n * Colors\n * ========================================================================== */\n/*\n * Typography\n * ========================================================================== */\n.spinner-wrapper {\n  position: fixed;\n  top: 0;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  background-color: #FFFFFF;\n  z-index: 99999;\n  height: 100%;\n  width: 100%;\n  overflow: hidden !important; }\n\n.bubblingG {\n  top: 50%;\n  left: 50%;\n  position: absolute;\n  margin-left: -40px; }\n\n.bubblingG {\n  text-align: center;\n  width: 80px;\n  height: 50px; }\n\n.bubblingG span {\n  display: inline-block;\n  vertical-align: middle;\n  width: 10px;\n  height: 10px;\n  margin: 25px auto;\n  -moz-border-radius: 50px;\n  -moz-animation: bubblingG 0.7s infinite alternate;\n  -webkit-border-radius: 50px;\n  -webkit-animation: bubblingG 0.7s infinite alternate;\n  -ms-border-radius: 50px;\n  -ms-animation: bubblingG 0.7s infinite alternate;\n  -o-border-radius: 50px;\n  -o-animation: bubblingG 0.7s infinite alternate;\n  border-radius: 50px;\n  animation: bubblingG 0.7s infinite alternate; }\n\n#bubblingG_1 {\n  -moz-animation-delay: 0s;\n  -webkit-animation-delay: 0s;\n  -ms-animation-delay: 0s;\n  -o-animation-delay: 0s;\n  animation-delay: 0s; }\n\n#bubblingG_2 {\n  -moz-animation-delay: 0.21s;\n  -webkit-animation-delay: 0.21s;\n  -ms-animation-delay: 0.21s;\n  -o-animation-delay: 0.21s;\n  animation-delay: 0.21s; }\n\n#bubblingG_3 {\n  -moz-animation-delay: 0.42s;\n  -webkit-animation-delay: 0.42s;\n  -ms-animation-delay: 0.42s;\n  -o-animation-delay: 0.42s;\n  animation-delay: 0.42s; }\n\n@-moz-keyframes bubblingG {\n  0% {\n    width: 10px;\n    height: 10px;\n    -moz-transform: translateY(0); }\n  100% {\n    width: 24px;\n    height: 24px;\n    -moz-transform: translateY(-10px); } }\n\n@-webkit-keyframes bubblingG {\n  0% {\n    width: 10px;\n    height: 10px;\n    -webkit-transform: translateY(0); }\n  100% {\n    width: 15px;\n    height: 15px;\n    -webkit-transform: translateY(-10px); } }\n\n@-ms-keyframes bubblingG {\n  0% {\n    width: 10px;\n    height: 10px;\n    -ms-transform: translateY(0); }\n  100% {\n    width: 15px;\n    height: 15px;\n    -ms-transform: translateY(-10px); } }\n\n@-o-keyframes bubblingG {\n  0% {\n    width: 10px;\n    height: 10px;\n    -o-transform: translateY(0); }\n  100% {\n    width: 15px;\n    height: 15px;\n    -o-transform: translateY(-10px); } }\n\n@keyframes bubblingG {\n  0% {\n    width: 10px;\n    height: 10px;\n    transform: translateY(0); }\n  100% {\n    width: 15px;\n    height: 15px;\n    transform: translateY(-10px); } }\n\n.bubblingG span {\n  background: #0A1829; }\n\n.spinner-wrapper {\n  background: transparent; }\n\n/*\n * Base styles\n * ========================================================================== */\nh1, h2, h3, h4, h5, h6, button {\n  font-family: \"Raleway\", sans-serif; }\n\nh1 {\n  font-size: 48px; }\n\np {\n  font-family: \"Open Sans\", \"Raleway\", sans-serif;\n  font-size: 16px; }\n\nbutton.btn-primary {\n  background: none;\n  border: 0;\n  border-bottom: 2px solid #0A1829;\n  font-family: 100;\n  color: #0A1829;\n  text-transform: uppercase;\n  border-radius: 2px; }\n\nbutton.btn-primary:hover {\n  border-radius: 3px; }\n\nbutton.btn-back.btn-primary:hover {\n  background: black; }\n\nbutton.btn-primary:hover, button.btn-primary:active, button.btn-primary:focus {\n  color: white;\n  background: #0A1829; }\n\n.navbar-inverse.navbar {\n  background: #0A1829;\n  border: 0;\n  color: white; }\n  .navbar-inverse.navbar .navbar-brand {\n    color: white;\n    font-family: \"Raleway\", sans-serif;\n    font-size: 20px; }\n\n.img-option .overlay {\n  background: rgba(255, 255, 255, 0.5);\n  border: 1px solid rgba(0, 0, 0, 0.2);\n  position: relative; }\n  .img-option .overlay .uncheckIcon {\n    color: rgba(0, 0, 0, 0.2); }\n  .img-option .overlay .checkIcon {\n    color: transparent; }\n  .img-option .overlay .option-text {\n    color: black;\n    font-weight: 800; }\n\n.img-option.active .overlay {\n  background: rgba(10, 24, 41, 0.7); }\n  .img-option.active .overlay .uncheckIcon {\n    color: transparent; }\n  .img-option.active .overlay .checkIcon {\n    color: white; }\n  .img-option.active .overlay .option-text {\n    color: white; }\n\n.img-option.active .overlay:hover .checkIcon {\n  color: white; }\n\n.img-option.active .overlay:hover .uncheckIcon {\n  color: transparent; }\n\n.img-option .overlay:hover .uncheckIcon {\n  color: transparent; }\n\n.img-option .overlay:hover .checkIcon {\n  color: rgba(0, 0, 0, 0.6); }\n", ""]);
 
 // exports
 
