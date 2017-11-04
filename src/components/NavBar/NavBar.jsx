@@ -7,18 +7,16 @@ class NavBar extends Component {
 
 
   render() {
-    let navBarStyle = {
-      position: 'fixed',
-      zIndex: '100',
-      width: '100%'
-    }
 
     return (
-      <nav className="navbar navbar-inverse" style={navBarStyle}>
+      <nav className="navbar navbar-inverse navbar-fixed-top">
         <div className="container-fluid">
           <div className="navbar-header">
             <a className="navbar-brand">NewsEd</a>
           </div>
+          <ul className="nav navbar-nav navbar-right" style={{marginTop: 0}}>
+            <li><a style={{paddingTop: '10px', paddingBottom: 0}}><i className="fa fa-cog" style={{fontSize: '2em'}}></i></a></li>
+          </ul>
         </div>
       </nav>
     )

@@ -9,7 +9,7 @@
 Here are the list of pages:
 - First page gets to know your tastes and chooses a bunch of new channels to follow
 - Second page shows you the top stories for each news channel - you can sort them, change their order, and filter by channel
-- Third page is a settings page that lets you change the channels that you are subscribed to 
+- Third page is a settings page that lets you change the channels that you are subscribed to
 
 ## TODO list
 
@@ -25,7 +25,7 @@ For debugging, run:
     npm run debug
     ```
 
-Then you can open the webpage `http://localhost:8081` to see the application. Make any changes to the javascript, and the page will automatically reload.
+Then you can open the webpage `http://localhost:8080` to see the application. Make any changes to the javascript, and the page will automatically reload.
 
 If you add a package to `package.json` make sure to run:
     ```sh

@@ -98,7 +98,11 @@ class FeedPage extends Component {
   }
 
   componentDidMount() {
-    Api.getArticlesFromSources(this.props.sources).then(articles => {
+    let sources = this.props.sources.length;
+    if (this.props.sources.length === 0) {
+      sources = ['bbc-news', 'techcrunch', 'business-insider', 'google-news']
+    }
+    Api.getArticlesFromSources(sources).then(articles => {
       if (articles) {
         this.setState({
             articles: articles
